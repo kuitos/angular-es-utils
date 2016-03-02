@@ -9,10 +9,8 @@ export default class Deferred {
 	constructor() {
 
 		this.promise = new Promise((resolve, reject) => {
-
 			this._resolve = resolve;
 			this._reject = reject;
-
 		});
 
 	}
@@ -22,7 +20,12 @@ export default class Deferred {
 	}
 
 	reject(value) {
-		this._reject.call(this.promise, value);
+
+		try {
+			this._reject.call(this.promise, value);
+		} catch (e) {
+			console.warn(e);
+		}
 	}
 
 }
