@@ -20,12 +20,7 @@ export default class Deferred {
 	}
 
 	reject(value) {
-
-		try {
-			this._reject.call(this.promise, value);
-		} catch (e) {
-			console.warn(e);
-		}
+		this._reject.call(this.promise, value);
 	}
 
 }
