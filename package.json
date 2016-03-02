@@ -1,11 +1,11 @@
 {
   "name": "angular-es-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "es utils design for angular1.x",
   "main": "./lib/index.js",
   "scripts": {
 	"build": "rm -fr lib && NODE_ENV=production babel src --out-dir lib --ignore **/__tests__ && git add lib",
-	"codecheck": "NODE_EVN=test eslint src/**",
+	"codecheck": "NODE_EVN=test eslint src",
 	"start": "node server.js"
   },
   "author": "Kuitos<kuitos.lau@gmail.com>",
