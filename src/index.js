@@ -7,9 +7,11 @@
 import {Inject} from './decorators';
 import FactoryCreator from './factory-creator';
 import ModuleHelper from './module-helper';
+import Deferred from './deferred';
 
 export {
 	Inject,
 	FactoryCreator,
-	ModuleHelper
+	ModuleHelper,
+	Deferred
 };
