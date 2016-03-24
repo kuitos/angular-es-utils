@@ -22,14 +22,14 @@ const EVENTS = [ANIMATIONEND_EVENT, TRANSITIONEND_EVENT].join(' ').split(' ');
 
 export default {
 
-	addClass(element, className, doneHook){
+	addClass: (element, className, doneHook) => {
 		element.classList.add(className);
 		EVENTS.forEach(event => element.addEventListener(event, doneHook, false));
 	},
 
-	removeClass(element, className, doneHook){
+	removeClass: (element, className, doneHook) => {
 		element.classList.remove(className);
 		EVENTS.forEach(event => element.addEventListener(event, doneHook, false));
 	}
 
-}
+};
