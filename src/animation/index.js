@@ -24,12 +24,19 @@ export default {
 
 	addClass: (element, className, doneHook) => {
 		element.classList.add(className);
-		EVENTS.forEach(event => element.addEventListener(event, doneHook, false));
+		EVENTS.forEach(event => {
+			element.addEventListener(event, () => {
+				element.classList.remove(className);
+				doneHook();
+			}, false)
+		});
 	},
 
 	removeClass: (element, className, doneHook) => {
 		element.classList.remove(className);
-		EVENTS.forEach(event => element.addEventListener(event, doneHook, false));
+		EVENTS.forEach(event => {
+			element.addEventListener(event, doneHook, false)
+		});
 	}
 
 };
