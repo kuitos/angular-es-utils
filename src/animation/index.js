@@ -19,10 +19,11 @@ if (window.ontransitionend === undefined && window.onwebkittransitionend !== und
 }
 
 const EVENTS = [ANIMATIONEND_EVENT, TRANSITIONEND_EVENT].join(' ').split(' ');
+const noop = () => {};
 
 export default {
 
-	addClass: (element, className, doneHook, autoRemove = false) => {
+	addClass: (element, className, doneHook = noop, autoRemove = false) => {
 		element.classList.add(className);
 		EVENTS.forEach(event => {
 			element.addEventListener(event, () => {
