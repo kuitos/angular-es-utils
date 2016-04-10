@@ -5,7 +5,9 @@
  */
 
 import Inject from './Inject';
+import Bind from './Bind';
 
 export {
-	Inject
+	Inject,
+	Bind
 };
