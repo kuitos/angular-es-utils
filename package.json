@@ -7,6 +7,7 @@
     "build": "rm -fr lib && NODE_ENV=production babel src --out-dir lib --ignore **/__tests__ && git add lib",
     "codecheck": "NODE_EVN=test eslint src",
     "start": "node server.js",
+    "prepush": "npm test",
     "test": "ava -v"
   },
   "author": "Kuitos<kuitos.lau@gmail.com>",
@@ -15,11 +16,15 @@
       "src/**/__tests__/*.js"
     ],
     "require": [
-      "babel-register"
+      "babel-register",
+      "./ava-test-helper.js"
     ],
     "babel": "inherit"
   },
   "devDependencies": {
+    "angular": "^1.5.3",
+    "angular-mock": "^1.0.0",
+    "angular-mocks": "^1.5.3",
     "assets-webpack-plugin": "^3.1.0",
     "autoprefixer": "^6.3.6",
     "ava": "^0.14.0",
@@ -43,6 +48,7 @@
     "html-loader": "^0.4.0",
     "husky": "^0.10.1",
     "image-webpack-loader": "^1.6.3",
+    "jsdom": "^8.3.1",
     "json-mock-kuitos": "^1.0.3",
     "node-dir": "^0.1.11",
     "node-sass": "^3.4.1",

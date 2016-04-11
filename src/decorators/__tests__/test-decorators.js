@@ -8,7 +8,7 @@ import test from 'ava';
 import Bind from '../Bind';
 import Inject from '../Inject';
 
-@Inject('$scope')
+@Inject('$scope', '$q')
 class Test {
 
 	constructor() {
@@ -30,5 +30,12 @@ test('bind decorator', t => {
 });
 
 test('inject decorator', t => {
-	t.deepEqual(Test.$inject, ['$scope']);
+
+	const ctrl = new (Function.prototype.bind.apply(Test, [null, {name: '$scope'}, {name: '$q'}]))();
+
+	t.deepEqual(Test.$inject, ['$scope', '$q']);
+	t.is(ctrl._$scope.name, '$scope');
+	t.is(ctrl._$q.name, '$q');
+	t.is(ctrl.name, 'kuitos');
+
 });

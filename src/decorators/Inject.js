@@ -7,14 +7,19 @@
 /**
  * angular依赖注入器
  */
-export default (...dependencies) => (target, key, descriptor) => {
+export default (...dependencies) => target => {
 
-	// 修饰的如果是类的方法
-	if (descriptor) {
-		const fn = descriptor.value;
-		fn.$inject = dependencies;
-	} else {
-		target.$inject = dependencies;
+	class Constructor {
+
+		constructor(...args) {
+			// 将依赖服务挂载在原始构造函数的prototype上(不是直接绑定到this上,节省空间)
+			dependencies.forEach((dep, i) => target.prototype[`_${dep}`] = args[i]);
+			// 使用原始构造函数实例化
+			return new target(...args);
+		}
 	}
 
+	Constructor.$inject = dependencies;
+
+	return Constructor;
 };
