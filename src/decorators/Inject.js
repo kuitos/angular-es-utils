@@ -13,7 +13,7 @@ export default (...dependencies) => target => {
 
 		constructor(...args) {
 			// 将依赖服务挂载在原始构造函数的prototype上(不是直接绑定到this上,节省空间)
-			dependencies.forEach((dep, i) => target.prototype[`_${dep}`] = args[i]);
+			args.forEach((arg, i) => target.prototype[`_${dependencies[i]}`] = arg);
 			// 使用原始构造函数实例化
 			return new target(...args);
 		}
