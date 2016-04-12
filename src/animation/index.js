@@ -24,7 +24,6 @@ const noop = () => {};
 export default {
 
 	addClass: (element, className, doneHook = noop, autoRemove = false) => {
-		element.classList.add(className);
 		EVENTS.forEach(event => {
 			element.addEventListener(event, () => {
 
@@ -35,13 +34,16 @@ export default {
 				doneHook();
 			}, false);
 		});
+		
+		element.classList.add(className);
 	},
 
 	removeClass: (element, className, doneHook) => {
-		element.classList.remove(className);
 		EVENTS.forEach(event => {
 			element.addEventListener(event, doneHook, false);
 		});
+		
+		element.classList.remove(className);
 	}
 
 };

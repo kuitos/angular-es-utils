@@ -7,7 +7,11 @@
 /**
  * angular依赖注入器
  */
-export default (...dependencies) => target => {
+export default (...dependencies) => (target, name, descriptor) => {
+
+	if (descriptor) {
+		throw new Error('can not use Inject decorator with a non-constructor!');
+	}
 
 	class Constructor {
 
@@ -18,7 +22,6 @@ export default (...dependencies) => target => {
 			return new target(...args);
 		}
 	}
-
 	Constructor.$inject = dependencies;
 
 	return Constructor;

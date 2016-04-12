@@ -6,8 +6,12 @@
 
 import Inject from './Inject';
 import Bind from './Bind';
+import Throttle from './Throttle';
+import Debounce from './Debounce';
 
 export {
 	Inject,
-	Bind
+	Bind,
+	Throttle,
+	Debounce
 };

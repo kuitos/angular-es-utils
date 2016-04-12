@@ -7,18 +7,33 @@
 import test from 'ava';
 import Bind from '../Bind';
 import Inject from '../Inject';
+import Throttle from '../Throttle';
+import Debounce from '../Debounce';
 
 @Inject('$scope', '$q')
 class Test {
 
 	constructor() {
 		this.name = 'kuitos';
+		this.age = 0;
 	}
 
 	@Bind
 	getName() {
 		return this.name;
 	}
+
+	@Throttle(100)
+	resize() {
+		this.age++;
+	}
+
+	@Debounce(100)
+	switcher(cb) {
+		this.age++;
+		cb();
+	}
+
 }
 
 test('bind decorator', t => {
@@ -37,5 +52,31 @@ test('inject decorator', t => {
 	t.is(ctrl._$scope.name, '$scope');
 	t.is(ctrl._$q.name, '$q');
 	t.is(ctrl.name, 'kuitos');
+
+});
+
+test('throttle decorator', t => {
+
+	const test = new Test();
+
+	let now = Date.now();
+	while (Date.now() - now < 1000) {
+		test.resize();
+	}
+
+	t.is(test.age, 10);
+});
+
+test.cb('debounce decorator', t => {
+
+	const test = new Test();
+
+	let now = Date.now();
+	while (Date.now() - now < 1000) {
+		test.switcher(() => {
+			t.is(test.age, 1);
+			t.end();
+		});
+	}
 
 });
