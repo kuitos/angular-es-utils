@@ -12,11 +12,14 @@ export default class {
 
 			let instance = new Constructor(...args);
 
-			Object.getOwnPropertyNames(Constructor.prototype).forEach(prop => {
+			const prototype = Object.getPrototypeOf(instance);
+
+			Object.getOwnPropertyNames(prototype).forEach(prop => {
 
 				// 绑定实例到构造函数的每个方法下
-				if (prop !== 'constructor' && typeof Constructor.prototype[prop] === 'function') {
-					instance[prop] = instance[prop].bind(instance);
+				let fn = prototype[prop];
+				if (prop !== 'constructor' && typeof fn === 'function') {
+					prototype[prop] = fn.bind(instance);
 				}
 
 			});
@@ -27,7 +30,6 @@ export default class {
 		factory.$inject = Constructor.$inject || [];
 
 		return factory;
-
 	}
 
 }

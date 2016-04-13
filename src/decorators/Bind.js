@@ -14,7 +14,7 @@ export default (target, name, descriptor) => {
 		throw new Error('can not use Bind decorator with a constructor!');
 	}
 
-	const fn = target[name];
+	const fn = descriptor.value || target[name];
 
 	// 定义访问器属性的同时不能定义value跟writable
 	delete descriptor.value;

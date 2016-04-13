@@ -10,26 +10,18 @@ export default (delay = 10) => (target, name, descriptor) => {
 		throw new Error('can not use Throttle decorator with a constructor!');
 	}
 
-	delete descriptor.value;
-	delete descriptor.writable;
+	const fn = descriptor.value || target[name];
 
-	const fn = target[name];
 	let recent;
 
-	descriptor.set = value => {
-		target[name] = value;
-	};
+	descriptor.value = function(...args) {
 
-	descriptor.get = function() {
+		const now = Date.now();
 
-		return (...args) => {
-			const now = Date.now();
-
-			if (!recent || (now - recent > delay)) {
-				fn.apply(this, args);
-				recent = now;
-			}
-		};
+		if (!recent || (now - recent > delay)) {
+			fn.apply(this, args);
+			recent = now;
+		}
 	};
 
 	return descriptor;

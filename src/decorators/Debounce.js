@@ -10,25 +10,17 @@ export default (delay = 300) => (target, name, descriptor) => {
 		throw new Error('can not use Debounce decorator with a constructor!');
 	}
 
-	delete descriptor.value;
-	delete descriptor.writable;
-
-	const fn = target[name];
+	const fn = descriptor.value || target[name];
 	let timer = null;
 
-	descriptor.set = value => {
-		target[name] = value;
-	};
+	descriptor.value = function(...args) {
 
-	descriptor.get = function() {
+		clearTimeout(timer);
 
-		return (...args) => {
-			window.clearTimeout(timer);
-			timer = window.setTimeout(() => {
-				timer = null;
-				fn.apply(this, args);
-			}, delay);
-		};
+		timer = setTimeout(() => {
+			timer = null;
+			fn.apply(this, args);
+		}, delay);
 	};
 
 	return descriptor;

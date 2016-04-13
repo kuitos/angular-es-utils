@@ -36,14 +36,6 @@ class Test {
 
 }
 
-test('bind decorator', t => {
-
-	const test = new Test();
-	const getName = test.getName;
-	t.is(getName(), 'kuitos');
-
-});
-
 test('inject decorator', t => {
 
 	const ctrl = new (Function.prototype.bind.apply(Test, [null, {name: '$scope'}, {name: '$q'}]))();
@@ -52,6 +44,15 @@ test('inject decorator', t => {
 	t.is(ctrl._$scope.name, '$scope');
 	t.is(ctrl._$q.name, '$q');
 	t.is(ctrl.name, 'kuitos');
+	t.is(ctrl.getName(), 'kuitos');
+
+});
+
+test('bind decorator', t => {
+
+	const test = new Test();
+	const getName = test.getName;
+	t.is(getName(), 'kuitos');
 
 });
 
