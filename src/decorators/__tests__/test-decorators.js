@@ -4,80 +4,61 @@
  * @since 2016-04-07
  */
 
-import test from 'ava';
-import Bind from '../Bind';
-import Inject from '../Inject';
-import Throttle from '../Throttle';
-import Debounce from '../Debounce';
+import useCase from './use-case';
+import {assert} from 'chai';
 
-@Inject('$scope', '$q')
-class Test {
+describe('decorators', () => {
 
-	constructor() {
-		this.name = 'kuitos';
-		this.age = 0;
-	}
+	let $injector, $scope, serviceInstance;
 
-	@Bind
-	getName() {
-		return this.name;
-	}
+	beforeEach(angular.mock.module(useCase));
+	beforeEach(angular.mock.inject((_$injector_, $rootScope) => {
+		$injector = _$injector_;
+		$scope = $rootScope.$new();
+		serviceInstance = $injector.get('Service');
+	}));
 
-	@Throttle(100)
-	resize() {
-		this.age++;
-	}
+	describe('inject', () => {
 
-	@Debounce(100)
-	switcher(cb) {
-		this.age++;
-		cb();
-	}
-
-}
-
-test('inject decorator', t => {
-
-	const ctrl = new (Function.prototype.bind.apply(Test, [null, {name: '$scope'}, {name: '$q'}]))();
-
-	t.deepEqual(Test.$inject, ['$scope', '$q']);
-	t.is(ctrl._$scope.name, '$scope');
-	t.is(ctrl._$q.name, '$q');
-	t.is(ctrl.name, 'kuitos');
-	t.is(ctrl.getName(), 'kuitos');
-
-});
-
-test('bind decorator', t => {
-
-	const test = new Test();
-	const getName = test.getName;
-	t.is(getName(), 'kuitos');
-
-});
-
-test('throttle decorator', t => {
-
-	const test = new Test();
-
-	let now = Date.now();
-	while (Date.now() - now < 1000) {
-		test.resize();
-	}
-
-	t.is(test.age, 10);
-});
-
-test.cb('debounce decorator', t => {
-
-	const test = new Test();
-
-	let now = Date.now();
-	while (Date.now() - now < 1000) {
-		test.switcher(() => {
-			t.is(test.age, 1);
-			t.end();
+		it('service recipe: external service into Service constructor', () => {
+			assert.equal(serviceInstance._$q, $injector.get('$q'));
 		});
-	}
+
+	});
+
+	describe('bind', () => {
+
+		it('service recipe: this pointer always equal service instance', () => {
+			const getName = serviceInstance.getName;
+			assert.equal(getName(), 'kuitos');
+		});
+
+	});
+
+	describe('throttle', () => {
+
+		it('service recipe: method only run once per 100 milliseconds', () => {
+			const now = Date.now();
+			while (Date.now() - now < 1000) {
+				serviceInstance.resize();
+			}
+			assert.equal(serviceInstance.age, 10);
+		});
+
+	});
+
+	describe('debounce', () => {
+
+		it('service recipe: method only run once in 1000 milliseconds', done => {
+			const now = Date.now();
+			while (Date.now() - now < 1000) {
+
+				serviceInstance.switcher(() => {
+					assert.equal(serviceInstance.age, 1);
+					done();
+				});
+			}
+		});
+	});
 
 });

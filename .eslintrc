@@ -1,25 +1,26 @@
 {
   "ecmaFeatures": {
 	"modules": true,
-	"experimentalObjectRestSpread": true,
-	"jsx": true
+	"experimentalObjectRestSpread": true
   },
 
   "env": {
-	"browser": false,
+	"browser": true,
 	"es6": true,
-	"node": true
+	"node": true,
+    "mocha": true
   },
-
   "plugins": [
 	"standard"
   ],
 
   "globals": {
-	"angular": true,
-	"document": true,
-	"navigator": true,
-	"window": true
+    "angular": true,
+    "document": true,
+    "navigator": true,
+    "window": true,
+    "inject": true,
+    "module": true
   },
 
   "parser": "babel-eslint",
