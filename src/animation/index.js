@@ -34,7 +34,7 @@ export default {
 				doneHook();
 			}, false);
 		});
-		
+
 		element.classList.add(className);
 	},
 
@@ -42,7 +42,7 @@ export default {
 		EVENTS.forEach(event => {
 			element.addEventListener(event, doneHook, false);
 		});
-		
+
 		element.classList.remove(className);
 	}
 

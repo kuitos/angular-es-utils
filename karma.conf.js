@@ -2,6 +2,13 @@ var path = require('path');
 
 var env = process.env.NODE_ENV;
 
+var preLoaders = env === 'dev' ? [{
+	test: /\.js$/,
+	loader: 'eslint-loader',
+	exclude: /node_modules/,
+	include: [path.join(__dirname, 'src')]
+}] : null;
+
 module.exports = function (config) {
 
 	config.set({
@@ -39,15 +46,8 @@ module.exports = function (config) {
 				emitError: true,
 				formatter: require('eslint-friendly-formatter')
 			},
-			module: {
-				preLoaders: [
-					env === 'dev' ? {
-						test: /\.js$/,
-						loader: 'eslint-loader',
-						exclude: /node_modules/,
-						include: [path.join(__dirname, 'src')]
-					} : {}
-				],
+			
+			module: Object.assign({
 
 				loaders: [
 					{
@@ -56,7 +56,7 @@ module.exports = function (config) {
 						exclude: /node_modules/
 					}
 				]
-			}
+			}, preLoaders)
 
 		},
 
@@ -81,7 +81,7 @@ module.exports = function (config) {
 		logLevel: config.LOG_INFO,
 
 		// enable / disable watching file and executing tests whenever any file changes
-		autoWatch: env === 'dev',
+		autoWatch: true,
 
 		// start these browsers
 		// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
