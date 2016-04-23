@@ -35,26 +35,26 @@ class Service {
 
 }
 
-@Inject('$rootScope', '$compile')
+@Inject('$scope')
 class Controller {
 
 	constructor() {
-		this.recipe = 'component';
+		this.recipe = 'componentController';
 	}
 
+	@Bind
 	getRecipe() {
 		return this.recipe;
 	}
 
 }
 
-@Inject('$rootScope', '$compile')
 class Component {
 
 	constructor() {
 		this.controller = Controller;
 		this.bindings = {
-			data: '<'
+			data: '='
 		};
 	}
 }
@@ -62,5 +62,6 @@ class Component {
 export default angular
 	.module('decorators', [])
 	.service('Service', Service)
+	.controller('Controller', Controller)
 	.component('component', new Component())
 	.name;

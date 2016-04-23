@@ -9,30 +9,51 @@ import {assert} from 'chai';
 
 describe('decorators', () => {
 
-	let $injector, serviceInstance;
+	let $injector, serviceInstance, controllerInstance, componentController, $scope, $rootScope, bindings;
 
 	beforeEach(angular.mock.module(useCase));
-	beforeEach(angular.mock.inject(_$injector_ => {
+	beforeEach(angular.mock.inject((_$injector_, _$controller_, _$rootScope_, $componentController) => {
 		$injector = _$injector_;
-		// $scope = $rootScope.$new();
+		$scope = _$rootScope_.$new();
+		$rootScope = _$rootScope_;
+		componentController = $componentController('component', {$scope}, bindings = {data: {name: 'component'}});
 		serviceInstance = $injector.get('Service');
+		controllerInstance = _$controller_('Controller', {$scope});
 	}));
 
 	describe('inject', () => {
 
-		it('service recipe: external service into Service constructor', () => {
+		it('Service Recipe: external service should be members of instance which start with underscore', () => {
 			assert.equal(serviceInstance._$q, $injector.get('$q'));
+		});
+
+		it('Controller Recipe: external service should be members of instance which start with underscore', () => {
+			assert.equal(controllerInstance._$scope, $scope);
+		});
+
+		it('Component Recipe: external service should be members of instance which start with underscore', () => {
+			assert.equal(componentController._$scope, $scope);
+		});
+
+		it('Component Controller Recipe: bindings data should be bind to controller instance', () => {
+			assert.equal(componentController.data, bindings.data);
+			assert.equal(componentController._$scope.$ctrl.data, bindings.data);
+			assert.equal(componentController.recipe, 'componentController');
 		});
 
 	});
 
 	describe('bind', () => {
 
-		it('service recipe: this pointer always equal service instance', () => {
+		it('Service Recipe: this pointer always equal service instance', () => {
 			const getName = serviceInstance.getName;
-			assert.equal(getName(), 'kuitos');
+			assert.equal(getName(), serviceInstance.name);
 		});
 
+		it('Component Controller Recipe: this pointer always equal component controller instance', () => {
+			const getRecipe = componentController.getRecipe;
+			assert.equal(getRecipe(), componentController.recipe);
+		});
 	});
 
 	describe('throttle', () => {

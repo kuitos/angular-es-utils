@@ -13,13 +13,20 @@ export default (...dependencies) => (target, name, descriptor) => {
 		throw new Error('can not use Inject decorator with a non-constructor!');
 	}
 
+	const OriginalConstructor = target;
+
 	class Constructor {
 
 		constructor(...args) {
-			// 将依赖服务挂载在原始构造函数的prototype上(不是直接绑定到this上,节省空间)
-			args.forEach((arg, i) => target.prototype[`_${dependencies[i]}`] = arg);
-			// 使用原始构造函数实例化
-			return new target(...args);
+
+			let instance = new OriginalConstructor(...args);
+			// 存在通过 fn.apply(instance, locals) 的方式调用的情况,所以需要把apply过来的实例的属性复制一遍
+			Object.assign(instance, this);
+			
+			// 将注入的服务已下滑线开头(私有属性)的命名规则绑定到实例上
+			dependencies.forEach((dependency, i) => instance[`_${dependency}`] = args[i]);
+
+			return instance;
 		}
 	}
 	Constructor.$inject = dependencies;
