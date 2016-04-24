@@ -22,7 +22,7 @@ export default (...dependencies) => (target, name, descriptor) => {
 			let instance = new OriginalConstructor(...args);
 			// 存在通过 fn.apply(instance, locals) 的方式调用的情况,所以需要把apply过来的实例的属性复制一遍
 			Object.assign(instance, this);
-			
+
 			// 将注入的服务已下滑线开头(私有属性)的命名规则绑定到实例上
 			dependencies.forEach((dependency, i) => instance[`_${dependency}`] = args[i]);
 

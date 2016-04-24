@@ -9,13 +9,12 @@ import {assert} from 'chai';
 
 describe('decorators', () => {
 
-	let $injector, serviceInstance, controllerInstance, componentController, $scope, $rootScope, bindings;
+	let $injector, serviceInstance, controllerInstance, componentController, $scope, bindings;
 
 	beforeEach(angular.mock.module(useCase));
 	beforeEach(angular.mock.inject((_$injector_, _$controller_, _$rootScope_, $componentController) => {
 		$injector = _$injector_;
 		$scope = _$rootScope_.$new();
-		$rootScope = _$rootScope_;
 		componentController = $componentController('component', {$scope}, bindings = {data: {name: 'component'}});
 		serviceInstance = $injector.get('Service');
 		controllerInstance = _$controller_('Controller', {$scope});

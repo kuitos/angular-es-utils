@@ -5,35 +5,28 @@
  */
 
 import useCase from './use-case';
-import {assert}  from 'chai';
+import {assert} from 'chai';
 
 describe('factory creator', () => {
 
-	let $compile, $rootScope;
+	let $compile, $rootScope, directive;
 
 	beforeEach(angular.mock.module(useCase));
 	beforeEach(angular.mock.inject((_$compile_, _$rootScope_) => {
 		$compile = _$compile_;
 		$rootScope = _$rootScope_;
+
+		const scope = $rootScope.$new();
+		Object.assign(scope, {data: {name: 'kuitos'}});
+		directive = $compile('<directive data="data"></directive>')(scope);
+
 	}));
 
 	describe('transform directive constructor into factory', () => {
 
-		const scope = $rootScope.$new();
-		Object.assign(scope, {data: {name: 'kuitos'}});
-		const directive = $compile('<directive data="data"></directive>')(scope);
-
-		$rootScope.$digest();
-		
-		it('name of $rootScope won\'t be changed before directive linked', () => {
-			assert.include(directive.html(), 'kuitos undefined');
-		});
-
-		it('name of $rootScope will be changed after directive linked', done => {
-			$rootScope.$$postDigest(() => {
-				assert.include(directive.html(), 'kuitos kuitoss');
-				done();
-			});
+		it('controller $onInit should run before link function', () => {
+			$rootScope.$digest();
+			assert.include(directive.html(), 'kuitos rootScope');
 		});
 
 	});

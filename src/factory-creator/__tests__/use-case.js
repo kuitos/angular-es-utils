@@ -8,11 +8,22 @@ import angular from 'angular';
 import Inject from '../../decorators/Inject';
 import FactoryCreator from '../index';
 
+let data;
+
 @Inject('$rootScope')
 class Controller {
 
 	$onInit() {
-		this.data = `${this.data.name} ${this._$rootScope.name}`;
+		this._$rootScope.name = 'controller';
+	}
+
+	set data(value) {
+		data = value;
+		return value;
+	}
+
+	get data() {
+		return `${data.name} ${this._$rootScope.name}`;
 	}
 
 }
@@ -32,7 +43,7 @@ class Directive {
 	}
 
 	link() {
-		this._$rootScope.name = 'kuitos';
+		this._$rootScope.name = 'rootScope';
 	}
 
 }

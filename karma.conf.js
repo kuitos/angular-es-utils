@@ -1,13 +1,13 @@
 var path = require('path');
 
-var env = process.env.NODE_ENV;
+var NODE_ENV = process.env.NODE_ENV;
 
-var preLoaders = env === 'dev' ? [{
+var preLoaders = (NODE_ENV === 'dev') ? [{
 	test: /\.js$/,
 	loader: 'eslint-loader',
 	exclude: /node_modules/,
 	include: [path.join(__dirname, 'src')]
-}] : null;
+}] : [];
 
 module.exports = function (config) {
 
@@ -62,7 +62,7 @@ module.exports = function (config) {
 						exclude: /node_modules/
 					}
 				]
-			}, preLoaders)
+			}, {preLoaders: preLoaders})
 
 		},
 
