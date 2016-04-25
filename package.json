@@ -5,6 +5,7 @@
   "main": "./index.js",
   "scripts": {
     "build": "rm -fr lib && NODE_ENV=production babel src --out-dir lib --ignore **/__tests__",
+    "prepublish": "npm run build",
     "codecheck": "NODE_EVN=test eslint src",
     "start": "NODE_ENV=dev karma start",
     "prepush": "npm run codecheck && npm test",
