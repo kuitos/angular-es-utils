@@ -1,10 +1,10 @@
 {
   "name": "angular-es-utils",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "description": "es utils design for angular1.x",
-  "main": "./lib/index.js",
+  "main": "./index.js",
   "scripts": {
-    "build": "rm -fr lib && NODE_ENV=production babel src --out-dir lib --ignore **/__tests__ && git add lib",
+    "build": "rm -fr lib && NODE_ENV=production babel src --out-dir lib --ignore **/__tests__",
     "codecheck": "NODE_EVN=test eslint src",
     "start": "NODE_ENV=dev karma start",
     "prepush": "npm run codecheck && npm test",

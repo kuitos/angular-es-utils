@@ -4,7 +4,7 @@
  * @since 2016-04-12
  */
 
-export default (delay = 300) => (target, name, descriptor) => {
+export default (delay = 300, context) => (target, name, descriptor) => {
 
 	if (!descriptor) {
 		throw new Error('can not use Debounce decorator with a constructor!');
@@ -19,7 +19,7 @@ export default (delay = 300) => (target, name, descriptor) => {
 
 		timer = setTimeout(() => {
 			timer = null;
-			fn.apply(this, args);
+			fn.apply(context || this, args);
 		}, delay);
 	};
 

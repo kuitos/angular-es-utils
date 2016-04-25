@@ -4,7 +4,7 @@
  * @since 2016-04-12
  */
 
-export default (delay = 10) => (target, name, descriptor) => {
+export default (delay = 10, context) => (target, name, descriptor) => {
 
 	if (!descriptor) {
 		throw new Error('can not use Throttle decorator with a constructor!');
@@ -19,7 +19,7 @@ export default (delay = 10) => (target, name, descriptor) => {
 		const now = Date.now();
 
 		if (!recent || (now - recent > delay)) {
-			fn.apply(this, args);
+			fn.apply(context || this, args);
 			recent = now;
 		}
 	};
