@@ -24,6 +24,7 @@ describe('decorators', () => {
 
 		it('Service Recipe: external service should be members of instance which start with underscore', () => {
 			assert.equal(serviceInstance._$q, $injector.get('$q'));
+			assert.equal(serviceInstance.getQ(), $injector.get('$q'));
 		});
 
 		it('Controller Recipe: external service should be members of instance which start with underscore', () => {

@@ -17,6 +17,10 @@ class Service {
 		this.age = 0;
 	}
 
+	getQ() {
+		return this._$q;
+	}
+
 	@Bind
 	getName() {
 		return this.name;
