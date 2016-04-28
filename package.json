@@ -1,15 +1,15 @@
 {
   "name": "angular-es-utils",
-  "version": "1.2.3",
+  "version": "1.2.6",
   "description": "es utils design for angular1.x",
   "main": "./index.js",
   "scripts": {
-    "build": "rm -fr lib && NODE_ENV=production babel src --out-dir lib --ignore **/__tests__",
-    "prepublish": "npm run build",
+    "build": "rm -fr lib && NODE_ENV=production babel src --out-dir lib --ignore **/__tests__ && cp package.json lib/package.json",
     "codecheck": "NODE_EVN=test eslint src",
-    "start": "NODE_ENV=dev karma start",
     "prepush": "npm run codecheck && npm test",
-    "test": "karma start --single-run"
+    "test": "karma start --single-run",
+    "pub": "npm run build && npm publish lib",
+    "start": "NODE_ENV=dev karma start"
   },
   "author": "Kuitos<kuitos.lau@gmail.com>",
   "devDependencies": {
