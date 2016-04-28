@@ -13,6 +13,7 @@
   },
   "author": "Kuitos<kuitos.lau@gmail.com>",
   "devDependencies": {
+    "babel-cli": "^6.7.7",
     "babel-core": "^6.7.4",
     "babel-eslint": "^4.1.3",
     "babel-loader": "^6.2.4",
