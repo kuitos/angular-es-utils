@@ -6,7 +6,6 @@
 
 /**
  * bind装饰器,用于处理function bind不适用的场景
- * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
  */
 export default (target, name, descriptor) => {
 
@@ -17,6 +16,7 @@ export default (target, name, descriptor) => {
 	const fn = descriptor.value || target[name];
 
 	// 定义访问器属性的同时不能定义value跟writable
+	// @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
 	delete descriptor.value;
 	delete descriptor.writable;
 
