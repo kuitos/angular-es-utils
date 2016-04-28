@@ -11,3 +11,6 @@ npm i angular-es-utils -D
 ```js
 import {Inject} from 'angular-es-utils';
 ```
+
+#### decorators
+[decorators usage](https://github.com/kuitos/angular-es-utils/blob/master/src%2Fdecorators%2FREADME.md)
