@@ -4,7 +4,7 @@
  * @since 2016-04-07
  */
 
-import useCase from './use-case';
+import useCase, { Service } from './use-case';
 import {assert} from 'chai';
 
 describe('decorators', () => {
@@ -53,6 +53,12 @@ describe('decorators', () => {
 		it('Component Controller Recipe: this pointer always equal component controller instance', () => {
 			const getRecipe = componentController.getRecipe;
 			assert.equal(getRecipe(), componentController.recipe);
+		});
+
+		it('this pointer should not obstruct each instance', () => {
+			const service1GetName = new Service('l').getName;
+			const service2GetName = new Service('k').getName;
+			assert.notEqual(service1GetName(), service2GetName());
 		});
 	});
 

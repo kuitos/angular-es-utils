@@ -10,10 +10,10 @@ import Throttle from '../Throttle';
 import Debounce from '../Debounce';
 
 @Inject('$q')
-class Service {
+export class Service {
 
-	constructor() {
-		this.name = 'kuitos';
+	constructor(name = 'kuitos') {
+		this.name = name;
 		this.age = 0;
 	}
 
