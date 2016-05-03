@@ -25,7 +25,7 @@ export default (target, name, descriptor) => {
 	};
 
 	descriptor.get = function() {
-		return fn.bind(this);
+		return this.__boundFn__ || (this.__boundFn__ = fn.bind(this));
 	};
 
 	return descriptor;

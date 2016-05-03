@@ -4,7 +4,7 @@
  * @since 2016-04-07
  */
 
-import useCase, { Service } from './use-case';
+import useCase, {Service} from './use-case';
 import {assert} from 'chai';
 
 describe('decorators', () => {
@@ -59,6 +59,13 @@ describe('decorators', () => {
 			const service1GetName = new Service('l').getName;
 			const service2GetName = new Service('k').getName;
 			assert.notEqual(service1GetName(), service2GetName());
+		});
+
+		it('function should always share the same instance', () => {
+			const service = new Service('kuitos');
+			const getName1 = service.getName;
+			const getName2 = service.getName;
+			assert.equal(getName1, getName2);
 		});
 	});
 
