@@ -14,6 +14,8 @@ export default (target, name, descriptor) => {
 	}
 
 	const fn = descriptor.value || target[name];
+	// use function name(or fn string if not support Function.name) as identifier which can ensure every function uniquely after wrapped
+	const fnName = `__${fn.name || fn}Fn`;
 
 	// 定义访问器属性的同时不能定义value跟writable
 	// @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
@@ -25,7 +27,7 @@ export default (target, name, descriptor) => {
 	};
 
 	descriptor.get = function() {
-		return this.__boundFn__ || (this.__boundFn__ = fn.bind(this));
+		return this[fnName] || (this[fnName] = fn.bind(this));
 	};
 
 	return descriptor;

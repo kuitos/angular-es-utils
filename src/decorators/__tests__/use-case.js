@@ -26,6 +26,11 @@ export class Service {
 		return this.name;
 	}
 
+	@Bind
+	getName2() {
+		return this.name + '2';
+	}
+
 	@Throttle(100)
 	resize() {
 		this.age++;

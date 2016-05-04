@@ -65,7 +65,9 @@ describe('decorators', () => {
 			const service = new Service('kuitos');
 			const getName1 = service.getName;
 			const getName2 = service.getName;
+			const get2AppendedName = service.getName2;
 			assert.equal(getName1, getName2);
+			assert.equal(get2AppendedName(), 'kuitos2');
 		});
 	});
 
