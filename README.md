@@ -1,6 +1,8 @@
-# angular-es-utils
+## angular-es-utils
 
-The es6 version of [angular utils](https://github.com/kuitos/angular-utils) 
+![npm](https://img.shields.io/npm/v/angular-es-utils.svg)  ![npm](https://img.shields.io/npm/dt/angular-es-utils.svg)
+
+The es6 version of [angular utils](https://github.com/kuitos/angular-utils)     
 
 How To Use
 
