@@ -8,7 +8,7 @@ import angular from 'angular';
 
 let injector = null;
 
-export function ready(fn) {
+function ready(fn) {
 
 	var fired = false;
 
@@ -31,32 +31,48 @@ export function ready(fn) {
 
 }
 
-export function getInjectorGetter() {
+/**
+ * 获取应用的injector,默认查询被ng-app标记的节点,否则从document.body开始找
+ * @param rootElement
+ */
+export function getInjector(rootElement = (document.querySelector('[ng-app]') || document.body)) {
 
-	return function getInjector(rootElement = (document.querySelector('[ng-app]') || document.body)) {
+	const injector = angular.element(rootElement).injector();
 
-		const injector = angular.element(rootElement).injector();
+	if (injector) {
+		return injector;
+	} else {
 
-		if (injector) {
-			return injector;
-		} else {
+		const childNodes = rootElement.childNodes;
 
-			const childNodes = rootElement.childNodes;
+		for (let i = 0; i < childNodes.length; i++) {
 
-			for (let i = 0; i < childNodes.length; i++) {
+			const injector = getInjector(childNodes[i]);
 
-				const injector = getInjector(childNodes[i]);
-
-				if (injector) {
-					return injector;
-				}
+			if (injector) {
+				return injector;
 			}
 		}
+	}
 
-		return null;
-	};
+	return null;
 }
 
-ready(getInjectorGetter());
+// export for testing
+export function _assignInjector() {
+	injector = getInjector();
+}
+
+ready(_assignInjector);
+
+// make commonjs have the same behavior with es6 module
+Object.defineProperty(exports, 'default', {
+	set(value) {
+		injector = value;
+	},
+	get() {
+		return injector;
+	}
+});
 
 export default injector;
