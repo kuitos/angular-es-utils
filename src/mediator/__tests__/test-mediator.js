@@ -6,7 +6,7 @@
 
 import {assert} from 'chai';
 import angular from 'angular';
-import {Mediator} from '../index';
+import Mediator from '../index';
 import injector, {_assignInjector} from '../../injector';
 
 describe('mediator', () => {

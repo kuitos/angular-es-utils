@@ -4,7 +4,7 @@
  * @since 2015-12-29
  */
 
-export const FactoryCreator = {
+export default {
 
 	create(Constructor) {
 

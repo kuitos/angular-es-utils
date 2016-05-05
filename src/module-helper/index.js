@@ -6,9 +6,9 @@
 
 import angular from 'angular';
 
-export default class {
+export default {
 
-	getModule(moduleName, deps) {
+	get(moduleName, deps) {
 
 		try {
 			return angular.module(moduleName);
@@ -18,4 +18,4 @@ export default class {
 
 	}
 
-}
+};

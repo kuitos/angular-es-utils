@@ -15,5 +15,42 @@ npm i angular-es-utils -D
 import {Inject} from 'angular-es-utils';
 ```
 
-#### decorators
-[decorators usage](https://github.com/kuitos/angular-es-utils/blob/master/src%2Fdecorators%2FREADME.md)
+#### 工具列表
+* animation  
+	动画操作帮助类
+
+	```js
+	import {Animation} from 'angular-es-utils';
+	import Animation from 'angular-es-utils/animation';
+	```
+
+* decorators  
+	装饰器
+	[decorators usage](https://github.com/kuitos/angular-es-utils/blob/master/src%2Fdecorators%2FREADME.md)
+
+* deferred
+* factory-creator
+	将Class转换成factory，供directive语法使用
+	
+	```js
+	.directive('editor', FactoryCreator.create(Editor))
+	```
+
+* injector  
+	在angular环境之外获取ng-app的注入器
+	
+	```js
+	import injector from 'angular-es-utils/injector';
+	let scope = injector.get('$rootScope').$new();
+	```
+	
+* mediator  
+	中介者，环境无关的 订阅／发布 模型
+
+* module-helper
+	
+	```js
+	import ModuleHelper from 'angular-es-utils/module-helper';
+	let module = ModuleHelper.get('app');
+	```
+	

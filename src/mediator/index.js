@@ -9,7 +9,7 @@ import angular from 'angular';
 
 let topics = {};
 
-export const Mediator = {
+export default {
 
 	/**
 	 * 订阅消息

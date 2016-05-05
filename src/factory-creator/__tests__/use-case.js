@@ -6,7 +6,7 @@
 
 import angular from 'angular';
 import Inject from '../../decorators/Inject';
-import {FactoryCreator} from '../index';
+import FactoryCreator from '../index';
 
 let data;
 
