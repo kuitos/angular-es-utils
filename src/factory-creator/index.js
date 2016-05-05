@@ -4,9 +4,9 @@
  * @since 2015-12-29
  */
 
-export default class {
+export const FactoryCreator = {
 
-	static create(Constructor) {
+	create(Constructor) {
 
 		function factory(...args) {
 
@@ -32,4 +32,4 @@ export default class {
 		return factory;
 	}
 
-}
+};

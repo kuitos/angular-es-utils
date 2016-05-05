@@ -4,11 +4,12 @@
  * @since 2016-02-02
  */
 
-import FactoryCreator from './factory-creator';
+import {FactoryCreator} from './factory-creator';
 import ModuleHelper from './module-helper';
 import Deferred from './deferred';
 import Animation from './animation';
 import Injector from './injector';
+import {Mediator} from './mediator';
 
 export * from './decorators';
 
@@ -17,5 +18,6 @@ export {
 	ModuleHelper,
 	Deferred,
 	Animation,
-	Injector
+	Injector,
+	Mediator
 };
