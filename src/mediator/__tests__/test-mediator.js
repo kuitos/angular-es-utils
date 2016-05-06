@@ -7,7 +7,7 @@
 import {assert} from 'chai';
 import angular from 'angular';
 import Mediator from '../index';
-import injector, {_assignInjector} from '../../injector';
+import injector from '../../injector';
 
 describe('mediator', () => {
 
@@ -16,7 +16,6 @@ describe('mediator', () => {
 	div.innerHTML = '<div>0<div>00</div><div>01<div>010</div><div ng-app>011</div></div></div>';
 	document.body.appendChild(div);
 	angular.bootstrap(div);
-	_assignInjector();
 
 	const $scope = injector.get('$rootScope').$new(true);
 
