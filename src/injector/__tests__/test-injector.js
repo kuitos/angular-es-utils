@@ -6,7 +6,7 @@
 import angular from 'angular';
 import {assert} from 'chai';
 
-import injector from '../index';
+import getInjector from '../index';
 
 describe('injector', () => {
 
@@ -14,7 +14,7 @@ describe('injector', () => {
 		const div = document.createElement('div');
 		div.innerHTML = '<div>0<div>00</div><div>01<div>010</div><div ng-app>011</div></div></div>';
 		angular.bootstrap(div);
-		assert.isTrue(angular.equals(injector, $injector));
+		assert.isTrue(angular.equals(getInjector(div), $injector));
 	}));
 
 });

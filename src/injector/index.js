@@ -6,13 +6,11 @@
 
 import angular from 'angular';
 
-let injector = null;
-
 /**
  * 获取应用的injector,默认查询被ng-app标记的节点,否则从document.body开始找
  * @param rootElement
  */
-export function getInjector(rootElement = (document.querySelector('[ng-app]') || document.body)) {
+export default function getInjector(rootElement = (document.querySelector('[ng-app]') || document.body)) {
 
 	const injector = angular.element(rootElement).injector();
 
@@ -34,15 +32,3 @@ export function getInjector(rootElement = (document.querySelector('[ng-app]') ||
 
 	return null;
 }
-
-// make commonjs have the same behavior with es6 module
-Object.defineProperty(exports, 'default', {
-	set(value) {
-		injector = value;
-	},
-	get() {
-		return injector || getInjector();
-	}
-});
-
-export default injector;

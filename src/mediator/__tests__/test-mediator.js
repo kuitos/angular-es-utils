@@ -7,7 +7,7 @@
 import {assert} from 'chai';
 import angular from 'angular';
 import Mediator from '../index';
-import injector from '../../injector';
+import getInjector from '../../injector';
 
 describe('mediator', () => {
 
@@ -17,7 +17,7 @@ describe('mediator', () => {
 	document.body.appendChild(div);
 	angular.bootstrap(div);
 
-	const $scope = injector.get('$rootScope').$new(true);
+	const $scope = getInjector(div).get('$rootScope').$new(true);
 
 	Mediator.subscribe('test', (...args) => {
 		assert.deepEqual(args, [10, 100, 1000]);
