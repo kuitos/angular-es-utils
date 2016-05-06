@@ -8,13 +8,32 @@ import angular from 'angular';
 
 let injector = null;
 
-const bootstrap = angular.bootstrap;
+/**
+ * 获取应用的injector,默认查询被ng-app标记的节点,否则从document.body开始找
+ * @param rootElement
+ */
+export function getInjector(rootElement = (document.querySelector('[ng-app]') || document.body)) {
 
-// rewrite angular bootstrap method to assign our injector
-angular.bootstrap = (...args) => {
-	injector = bootstrap(...args);
-	return injector;
-};
+	const injector = angular.element(rootElement).injector();
+
+	if (injector) {
+		return injector;
+	} else {
+
+		const childNodes = rootElement.childNodes;
+
+		for (let i = 0; i < childNodes.length; i++) {
+
+			const injector = getInjector(childNodes[i]);
+
+			if (injector) {
+				return injector;
+			}
+		}
+	}
+
+	return null;
+}
 
 // make commonjs have the same behavior with es6 module
 Object.defineProperty(exports, 'default', {
@@ -22,7 +41,7 @@ Object.defineProperty(exports, 'default', {
 		injector = value;
 	},
 	get() {
-		return injector;
+		return injector || getInjector();
 	}
 });
 
