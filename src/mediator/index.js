@@ -4,11 +4,13 @@
  * @since 2016-05-04
  */
 
-import injector from '../injector';
 import angular from 'angular';
 
 let topics = {};
 
+/**
+ * 中介者模式。用于解决各模块间无法通过 $scope.$emit $scope.$on 等方式实现通信的问题(例如兄弟模块间通信)
+ */
 export default {
 
 	/**
@@ -39,7 +41,7 @@ export default {
 			}
 		}
 
-		if (scope && (scope.constructor === injector.get('$rootScope').constructor)) {
+		if (scope && (scope.constructor === scope.$root.constructor)) {
 			// scope销毁时同步移除对应订阅行为
 			scope.$on('$destroy', unSubscribe.bind(null, listener));
 		}
