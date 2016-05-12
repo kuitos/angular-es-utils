@@ -11,6 +11,7 @@ import Animation from './animation';
 import {getInjector} from './injector';
 import genResource from './rs-generator';
 import Mediator from './mediator';
+import dynamicExport from './dynamic-export';
 
 export * from './decorators';
 
@@ -20,6 +21,7 @@ export {
 	Deferred,
 	Animation,
 	getInjector,
+	dynamicExport,
 	genResource,
 	Mediator
 };
