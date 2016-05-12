@@ -6,11 +6,13 @@
 
 import angular from 'angular';
 
+import dynamicExport from '../dynamic-export';
+
 /**
  * 获取应用的injector,默认查询被ng-app标记的节点,否则从document.body开始找
  * @param rootElement
  */
-export default function getInjector(rootElement = (document.querySelector('[ng-app]') || document.body)) {
+export function getInjector(rootElement = (document.querySelector('[ng-app]') || document.body)) {
 
 	const injector = angular.element(rootElement).injector();
 
@@ -32,3 +34,8 @@ export default function getInjector(rootElement = (document.querySelector('[ng-a
 
 	return null;
 }
+
+// make commonjs have the same behavior with es6 module
+let injector = null;
+export default injector;
+dynamicExport(exports, 'default', () => injector || (injector = getInjector()));

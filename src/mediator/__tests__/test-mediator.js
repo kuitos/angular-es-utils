@@ -7,7 +7,7 @@
 import {assert} from 'chai';
 import angular from 'angular';
 import Mediator from '../index';
-import getInjector from '../../injector';
+import {getInjector} from '../../injector';
 
 describe('mediator', () => {
 

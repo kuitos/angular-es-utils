@@ -41,6 +41,10 @@ describe('decorators', () => {
 			assert.equal(componentController.recipe, 'componentController');
 		});
 
+		it('static props of Constructor should be same with original target', () => {
+			assert.equal(Service.getStaticName(), 'kuitos');
+		});
+
 	});
 
 	describe('bind', () => {

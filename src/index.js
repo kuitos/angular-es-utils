@@ -8,7 +8,8 @@ import FactoryCreator from './factory-creator';
 import ModuleHelper from './module-helper';
 import Deferred from './deferred';
 import Animation from './animation';
-import getInjector from './injector';
+import {getInjector} from './injector';
+import genResource from './rs-generator';
 import Mediator from './mediator';
 
 export * from './decorators';
@@ -19,5 +20,6 @@ export {
 	Deferred,
 	Animation,
 	getInjector,
+	genResource,
 	Mediator
 };

@@ -4,6 +4,8 @@
  * @since 2016-01-11
  */
 
+// 需要过滤的构造函数的属性
+const propBlacklist = ['name', 'prototype', 'length'];
 /**
  * angular依赖注入器
  */
@@ -29,6 +31,13 @@ export default (...dependencies) => (target, name, descriptor) => {
 			return instance;
 		}
 	}
+
+	// 因为通过static class property语法定义的静态方法是不可枚举的,所以这里不能用Object.keys API来筛选.
+	Object.getOwnPropertyNames(target).forEach(prop => {
+		if (propBlacklist.indexOf(prop) === -1) {
+			Constructor[prop] = target[prop];
+		}
+	});
 	Constructor.$inject = dependencies;
 
 	return Constructor;

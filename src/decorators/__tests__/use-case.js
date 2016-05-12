@@ -17,6 +17,10 @@ export class Service {
 		this.age = 0;
 	}
 
+	static getStaticName() {
+		return 'kuitos';
+	}
+
 	getQ() {
 		return this._$q;
 	}

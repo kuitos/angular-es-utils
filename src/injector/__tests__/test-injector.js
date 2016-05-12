@@ -6,7 +6,7 @@
 import angular from 'angular';
 import {assert} from 'chai';
 
-import getInjector from '../index';
+import {getInjector} from '../index';
 
 describe('injector', () => {
 
