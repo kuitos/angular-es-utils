@@ -1,6 +1,6 @@
 {
   "name": "angular-es-utils",
-  "version": "1.2.18",
+  "version": "1.2.19",
   "description": "es utils design for angular1.x",
   "main": "./index.js",
   "scripts": {
@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "angular": "^1.5.3",
-    "angular-mocks": "^1.5.3"
+    "angular-mocks": "^1.5.3",
+    "angular-resource": "^1.5.5"
   }
 }

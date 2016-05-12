@@ -4,6 +4,8 @@
  * @since 2016-05-11
  */
 
+import 'angular-resource';
+
 import injector from '../injector';
 
 export let apiPrefix = '';
