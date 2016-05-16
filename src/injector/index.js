@@ -9,10 +9,10 @@ import angular from 'angular';
 import dynamicExport from '../dynamic-export';
 
 /**
- * 获取应用的injector,默认查询被ng-app标记的节点,否则从document.body开始找
+ * 获取应用的injector,默认查询被ng-app标记的节点,否则从document.documentElement开始找
  * @param rootElement
  */
-export function getInjector(rootElement = (document.querySelector('[ng-app]') || document.body)) {
+export function getInjector(rootElement = (document.querySelector('[ng-app]') || document.documentElement)) {
 
 	const injector = angular.element(rootElement).injector();
 
