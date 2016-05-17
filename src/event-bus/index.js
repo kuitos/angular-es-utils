@@ -25,7 +25,7 @@ export default {
 		let topicListeners = topics[topic] = topics[topic] || [];
 
 		// 可清除指定监听器，如果不传则清除对应topic全部监听器
-		function unSubscribe(listener) {
+		function deregister(listener) {
 
 			var listenerIndex;
 
@@ -43,12 +43,12 @@ export default {
 
 		if (scope && (scope.constructor === scope.$root.constructor)) {
 			// scope销毁时同步移除对应订阅行为
-			scope.$on('$destroy', unSubscribe.bind(null, listener));
+			scope.$on('$destroy', deregister.bind(null, listener));
 		}
 
 		topicListeners.push(listener);
 
-		return unSubscribe;
+		return deregister;
 	},
 
 	/**

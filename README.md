@@ -44,8 +44,18 @@ import {Inject} from 'angular-es-utils';
 	let scope = injector.get('$rootScope').$new();
 	```
 	
-* mediator  
-	中介者，环境无关的 订阅／发布 模型
+* EventBus
+	事件总线，环境无关的 订阅／发布 模型
+
+	```js
+	import EventBus from 'angular-es-utils/event-bus';
+    // 订阅消息
+    const deregister = EventBus.on('grid:click', (num1,num2,num3) => console.log(num1, num2, num3));
+    // 发布消息
+    EventBus.dispatch('grid:click', 1, 2, 3);
+    // 解除订阅
+    deregister();
+	```
 
 * module-helper
 	
