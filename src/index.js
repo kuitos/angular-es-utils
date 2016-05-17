@@ -10,7 +10,7 @@ import Deferred from './deferred';
 import Animation from './animation';
 import {getInjector} from './injector';
 import genResource from './rs-generator';
-import Mediator from './mediator';
+import EventBus from './event-bus';
 import dynamicExport from './dynamic-export';
 
 export * from './decorators';
@@ -23,5 +23,5 @@ export {
 	getInjector,
 	dynamicExport,
 	genResource,
-	Mediator
+	EventBus
 };
