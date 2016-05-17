@@ -6,10 +6,10 @@
 
 import {assert} from 'chai';
 import angular from 'angular';
-import Mediator from '../index';
+import EventBus from '../index';
 import {getInjector} from '../../injector';
 
-describe('mediator', () => {
+describe('event-bus', () => {
 
 	// init injector
 	const div = document.createElement('div');
@@ -19,17 +19,17 @@ describe('mediator', () => {
 
 	const $scope = getInjector(div).get('$rootScope').$new(true);
 
-	Mediator.subscribe('test', (...args) => {
+	EventBus.on('test', (...args) => {
 		assert.deepEqual(args, [10, 100, 1000]);
 	}, $scope);
 
 	it('publish correctly', () => {
-		Mediator.publish('test', 10, 100, 1000);
+		EventBus.dispatch('test', 10, 100, 1000);
 	});
 
 	it('subscribe will be removed automatically when scope destroyed', () => {
 		$scope.$destroy();
-		Mediator.publish('test', 1, 2, 3);
+		EventBus.dispatch('test', 1, 2, 3);
 	});
 
 });

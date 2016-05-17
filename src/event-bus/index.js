@@ -9,7 +9,7 @@ import angular from 'angular';
 let topics = {};
 
 /**
- * 中介者模式。用于解决各模块间无法通过 $scope.$emit $scope.$on 等方式实现通信的问题(例如兄弟模块间通信)
+ * 事件总线。用于解决各模块间无法通过 $scope.$emit $scope.$on 等方式实现通信的问题(例如兄弟模块间通信)
  */
 export default {
 
@@ -20,7 +20,7 @@ export default {
 	 * @param scope 订阅行为发生所在的scope，用于在scope销毁时作解绑操作
 	 * @returns {Function} 取消订阅的反注册函数
 	 */
-	subscribe: (topic, listener, scope) => {
+	on: (topic, listener, scope) => {
 
 		let topicListeners = topics[topic] = topics[topic] || [];
 
@@ -54,7 +54,7 @@ export default {
 	/**
 	 * 发布消息，支持链式调用
 	 */
-	publish: (...args) => {
+	dispatch: (...args) => {
 
 		const topic = args[0];
 		const listeners = topics[topic] || [];
@@ -64,7 +64,7 @@ export default {
 			if (angular.isFunction(listener)) {
 				listener.apply(null, args.slice(1));
 			} else {
-				console.error('中介者发布 %s 消息失败，注册的listener不是函数类型！', topic);
+				console.error('事件总线分发 %s 消息失败，注册的listener不是函数类型！', topic);
 			}
 		});
 
