@@ -73,6 +73,16 @@ describe('decorators', () => {
 			assert.equal(getName1, getName2);
 			assert.equal(get2AppendedName(), 'kuitos2');
 		});
+
+		it('reassign should also worked well', () => {
+			const service = new Service('kuitos');
+			const original = service.getName;
+			service.getName = () => {
+				return original() + '6666';
+			};
+			const getName = service.getName;
+			assert.equal(getName(), 'kuitos6666');
+		});
 	});
 
 	describe('throttle', () => {

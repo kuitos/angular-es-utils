@@ -22,8 +22,8 @@ export default (target, name, descriptor) => {
 	delete descriptor.value;
 	delete descriptor.writable;
 
-	descriptor.set = value => {
-		target[name] = value;
+	descriptor.set = function(value) {
+		this[fnName] = value;
 	};
 
 	descriptor.get = function() {
