@@ -8,7 +8,11 @@ import 'angular-resource';
 
 import injector from '../injector';
 
-export let apiPrefix = '';
+let apiPrefix = '';
+
+export function setApiPrefix(prefix) {
+	apiPrefix = prefix;
+}
 
 export default (url, cache, params, additionalActions) => {
 
