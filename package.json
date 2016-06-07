@@ -8,7 +8,7 @@
     "codecheck": "NODE_EVN=test eslint src",
     "prepush": "npm run codecheck && npm test",
     "test": "karma start --single-run",
-    "pub": "npm run build && npm publish lib",
+    "pub": "npm run build && npm publish lib && cnpm sync angular-es-utils",
     "start": "NODE_ENV=dev karma start"
   },
   "author": "Kuitos<kuitos.lau@gmail.com>",
