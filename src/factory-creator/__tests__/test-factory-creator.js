@@ -26,6 +26,7 @@ describe('factory creator', () => {
 
 		it('controller $onInit should run before link function', () => {
 			$rootScope.$digest();
+			document.body.appendChild(directive[0]);
 			assert.include(directive.html(), 'kuitos rootScope');
 		});
 

@@ -6,6 +6,7 @@
 
 import useCase, {Service} from './use-case';
 import {assert} from 'chai';
+import Inject from '../Inject';
 
 describe('decorators', () => {
 
@@ -44,6 +45,27 @@ describe('decorators', () => {
 		it('static props of Constructor should be same with original target', () => {
 			assert.equal(Service.getStaticName(), 'kuitos');
 		});
+
+		it('class constructor should also hold the injected service which had bound to this when instantiate', angular.mock.inject(($controller, $rootScope) => {
+			const user = {name: 'kuitos'};
+
+			@Inject('$rootScope', 'user')
+			class InnerController {
+				constructor() {
+					assert.equal(this._$rootScope, $rootScope);
+					// assert.equal(this._user, user);
+				}
+
+				getUser() {
+					return this._user;
+				}
+			}
+
+			const controller = $controller(InnerController, {$rootScope, user});
+			assert.equal(controller._$rootScope, $rootScope);
+			// assert.equal(controller.getUser(), user);
+			// assert.notEqual(InnerController.prototype._user, user);
+		}));
 
 	});
 

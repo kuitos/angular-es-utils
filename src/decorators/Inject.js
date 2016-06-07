@@ -21,17 +21,32 @@ export default (...dependencies) => (target, name, descriptor) => {
 
 		constructor(...args) {
 
-			let instance = new OriginalConstructor(...args);
-			// 存在通过 fn.apply(instance, locals) 的方式调用的情况,所以需要把apply过来的实例的属性复制一遍
-			Object.assign(instance, this);
+			/* ----------------- 以下这一段恶心的代码都是为了兼容function跟class定义controller这两种情况 ------------------------ */
+			/* ----------------- 因为class定义的Constructor有时候需要直接访问this中以绑定的数据(fn.apply(instance, locals)) ------------------------ */
 
-			// 将注入的服务已下滑线开头(私有属性)的命名规则绑定到实例上
-			dependencies.forEach((dependency, i) => instance[`_${dependency}`] = args[i]);
+			// 存在通过 fn.apply(instance, locals) 的方式调用的情况,所以这里直接将依赖的服务拷贝到this里(服务已下划线作为前缀)
+			dependencies.forEach((dependency, i) => this[`_${dependency}`] = args[i]);
+			// 将构造器初始化时就需要访问的数据挂载到prototype上,这样即使通过new方式实例化也能在constructor里的this也具备完整信息
+			Object.assign(OriginalConstructor.prototype, this);
+
+			const instance = new OriginalConstructor(...args);
+
+			// 初始化完毕需要从prototype上删除挂载的属性,因为有一些注入的局部服务对于每一个实例而言是隔离的,如果改变prototype会出现混乱
+			Object.keys(this).forEach(prop => {
+				// prototype上不可枚举的属性不能删除(比如方法/accessor等)
+				if (OriginalConstructor.prototype.propertyIsEnumerable(prop)) {
+					delete OriginalConstructor.prototype[prop];
+				}
+			});
+
+			// 将this上的信息绑定到实例上
+			Object.assign(instance, this);
 
 			return instance;
 		}
 	}
 
+	// 将原始构造函数的属性复制到新的Constructor中,包括prototype
 	// 因为通过static class property语法定义的静态方法是不可枚举的,所以这里不能用Object.keys API来筛选.
 	Object.getOwnPropertyNames(target).forEach(prop => {
 		if (propBlacklist.indexOf(prop) === -1) {
