@@ -5,6 +5,7 @@
  */
 
 import useCase, {Service} from './use-case';
+import Bind from '../Bind';
 import {assert} from 'chai';
 import Inject from '../Inject';
 
@@ -104,6 +105,39 @@ describe('decorators', () => {
 			};
 			const getName = service.getName;
 			assert.equal(getName(), 'kuitos6666');
+		});
+
+		it('worked well although use decorator without @ symbol like compiled after webpack', () => {
+
+			const descriptors = [
+				{
+					key: 'fn1',
+					value: function() {
+						return 1;
+					}
+				},
+				{
+					key: 'fn2',
+					value: function() {
+						return 2;
+					}
+				}
+			];
+
+			function Klass() {
+			}
+
+			descriptors.forEach(descriptor => {
+				const target = Klass.prototype;
+				const name = descriptor.key;
+				Object.defineProperty(target, name, Bind(target, name, descriptor));
+			});
+
+			const instance = new Klass();
+
+			assert.notEqual(instance.fn1, instance.fn2);
+			assert.equal(instance.fn1(), 1);
+			assert.equal(instance.fn2(), 2);
 		});
 	});
 

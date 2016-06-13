@@ -14,8 +14,9 @@ export default (target, name, descriptor) => {
 	}
 
 	const fn = descriptor.value || target[name];
-	// use function name(or fn string if not support Function.name) as identifier which can ensure every function uniquely after wrapped
-	const fnName = `__${fn.name || fn}Fn`;
+	// use function string as identifier which can ensure every function uniquely after wrapped
+	// we can not use Function.name as identifier because its name may be empty(anonymous function) or defined by other ways(such as Object.defineProperty)
+	const fnName = `__${fn}Fn__`;
 
 	// 定义访问器属性的同时不能定义value跟writable
 	// @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
