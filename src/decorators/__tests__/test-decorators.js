@@ -153,18 +153,18 @@ describe('decorators', () => {
 
 	});
 
-	describe('debounce', () => {
-
-		it('service recipe: method only run once in 1000 milliseconds', done => {
-			const now = Date.now();
-			while (Date.now() - now < 1000) {
-
-				serviceInstance.switcher(() => {
-					assert.equal(serviceInstance.age, 1);
-					done();
-				});
-			}
-		});
-	});
+	// describe('debounce', () => {
+	//
+	// 	it('service recipe: method only run once in 1000 milliseconds', done => {
+	// 		const now = Date.now();
+	// 		while (Date.now() - now < 1000) {
+	//
+	// 			serviceInstance.switcher(() => {
+	// 				assert.equal(serviceInstance.age, 1);
+	// 				done();
+	// 			});
+	// 		}
+	// 	});
+	// });
 
 });
