@@ -30,3 +30,11 @@ export function isObject(value) {
 export function isString(value) {
 	return typeof value === 'string';
 }
+
+export function isFunction(value) {
+	return typeof value === 'function';
+}
+
+export function isPromiseLike(obj) {
+	return !!obj && typeof obj.then === 'function';
+}
