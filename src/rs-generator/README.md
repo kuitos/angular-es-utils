@@ -19,13 +19,13 @@ const COMMON_CONFIGS = {
 // 设置请求通用配置
 setCommonConfigs(COMMON_CONFIGS);
 
-// 直接基于es6 export
+// 方案1: 直接基于es6 export
 dynamicExport(exports, 'User', () => genResource('/users/:userId', false, {userId: 1}, 
 	{authenticate: {method: 'GET'}},
 	{headers: {'X-AUTH-NAME': 'xxxx'}}
 ));
 
-// 使用angular service
+// 方案2: 使用angular service
 export default angular.module('services', [])
 	.factory('User', () => genResource('/users/:userId', false, {userId: 1}))
 	.name;
