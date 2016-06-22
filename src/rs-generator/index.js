@@ -19,27 +19,27 @@ export function setCommonConfigs(cc) {
 	commonConfigs = cc;
 }
 
-export default (url, cache, params, additionalActions, additionalConfigs = {}) => {
+export default (url, cache, params, additionalActions, additionalHttpConfigs = {}) => {
 
-	additionalConfigs = {...commonConfigs, ...additionalConfigs};
+	additionalHttpConfigs = {...commonConfigs, ...additionalHttpConfigs};
 
 	// 默认cache为defaultRestCache
 	// 自定义配置(配合$http interceptor)
 	const DEFAULT_ACTIONS = {
 		// 查询，结果为对象
-		'get': {method: 'GET', cache, ...additionalConfigs},
+		'get': {method: 'GET', cache, ...additionalHttpConfigs},
 		// 查询，结果为数组
-		'query': {method: 'GET', isArray: true, cache, ...additionalConfigs},
+		'query': {method: 'GET', isArray: true, cache, ...additionalHttpConfigs},
 		// 保存(新增)
-		'save': {method: 'POST', cache, ...additionalConfigs},
+		'save': {method: 'POST', cache, ...additionalHttpConfigs},
 		// 修改(全量)
-		'update': {method: 'PUT', cache, ...additionalConfigs},
+		'update': {method: 'PUT', cache, ...additionalHttpConfigs},
 		// 修改(部分)
-		'patch': {method: 'PATCH', cache, ...additionalConfigs},
+		'patch': {method: 'PATCH', cache, ...additionalHttpConfigs},
 		// 逻辑删除
-		'remove': {method: 'DELETE', cache, ...additionalConfigs},
+		'remove': {method: 'DELETE', cache, ...additionalHttpConfigs},
 		// 物理删除
-		'delete': {method: 'DELETE', cache, ...additionalConfigs}
+		'delete': {method: 'DELETE', cache, ...additionalHttpConfigs}
 	};
 
 	return injector.get('$resource')(apiPrefix + url, params, Object.assign({}, DEFAULT_ACTIONS, additionalActions));
