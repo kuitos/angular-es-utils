@@ -6,14 +6,7 @@
 
 import angular from 'angular';
 
-
 function $httpDecorator($delegate) {
-
-	
-
-
-
-
 
 }
 $httpDecorator.$inject = ['$delegate'];
