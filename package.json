@@ -12,6 +12,7 @@
     "start": "NODE_ENV=dev karma start"
   },
   "author": "Kuitos<kuitos.lau@gmail.com>",
+  "homepage": "https://github.com/kuitos/angular-es-utils",
   "devDependencies": {
     "babel-cli": "^6.7.7",
     "babel-core": "^6.7.4",
