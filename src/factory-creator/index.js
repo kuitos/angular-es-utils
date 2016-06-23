@@ -4,9 +4,13 @@
  * @since 2015-12-29
  */
 
+const FUNCTION_PRIVATE_PROPS = ['apply', 'arguments', 'bind', 'call', 'caller', 'constructor', 'Symbol'];
+
 export default {
 
 	create(Constructor) {
+
+		console.warn('该方法在下一版本即将废弃,请尽快使用别的替代解决方案!');
 
 		function factory(...args) {
 
@@ -16,10 +20,13 @@ export default {
 
 			Object.getOwnPropertyNames(prototype).forEach(prop => {
 
-				// 绑定实例到构造函数的每个方法下
-				let fn = prototype[prop];
-				if (prop !== 'constructor' && typeof fn === 'function') {
-					prototype[prop] = fn.bind(instance);
+				// 只处理非私有方法
+				if (FUNCTION_PRIVATE_PROPS.indexOf(prop) === -1) {
+					// 绑定实例到构造函数的每个方法下
+					let fn = prototype[prop];
+					if (typeof fn === 'function') {
+						prototype[prop] = fn.bind(instance);
+					}
 				}
 
 			});

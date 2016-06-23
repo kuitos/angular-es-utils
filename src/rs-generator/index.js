@@ -9,19 +9,24 @@ import 'angular-resource';
 import injector from '../injector';
 
 let apiPrefix = '';
-let commonConfigs = {};
 
 export function setApiPrefix(prefix) {
 	apiPrefix = prefix;
 }
 
-export function setCommonConfigs(cc) {
-	commonConfigs = cc;
-}
+export let defaultHttpConfigs = {
+	headers: {},
+	interceptors: []
+};
 
-export default (url, cache, params, additionalActions, additionalHttpConfigs = {}) => {
+export default (url, cache, params, additionalActions = {}, additionalHttpConfigs = {}) => {
 
-	additionalHttpConfigs = {...commonConfigs, ...additionalHttpConfigs};
+	additionalHttpConfigs = {...defaultHttpConfigs, ...additionalHttpConfigs};
+
+	// 将默认配置复制到新添加的action里
+	Object.keys(additionalActions).forEach(action => {
+		additionalActions[action] = Object.assign(defaultHttpConfigs, additionalActions[action]);
+	});
 
 	// 默认cache为defaultRestCache
 	// 自定义配置(配合$http interceptor)
@@ -42,5 +47,5 @@ export default (url, cache, params, additionalActions, additionalHttpConfigs = {
 		'delete': {method: 'DELETE', cache, ...additionalHttpConfigs}
 	};
 
-	return injector.get('$resource')(apiPrefix + url, params, Object.assign({}, DEFAULT_ACTIONS, additionalActions));
+	return injector.get('$resource')(apiPrefix + url, params, {...DEFAULT_ACTIONS, ...additionalActions});
 };
