@@ -1,6 +1,6 @@
 {
   "name": "angular-es-utils",
-  "version": "1.2.31",
+  "version": "1.2.32",
   "description": "es utils design for angular1.x",
   "main": "./index.js",
   "scripts": {
@@ -34,6 +34,7 @@
     "karma-mocha-reporter": "^2.0.2",
     "karma-webpack": "^1.7.0",
     "mocha": "^2.4.5",
+    "sinon": "^2.0.0-pre",
     "webpack": "^1.13.0"
   },
   "dependencies": {

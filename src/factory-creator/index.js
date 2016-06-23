@@ -10,7 +10,7 @@ export default {
 
 	create(Constructor) {
 
-		console.warn('该方法在下一版本即将废弃,请尽快使用别的替代解决方案!');
+		console.warn('FactoryCreator.create 方法将在下一版本废弃,请尽快使用别的替代解决方案!');
 
 		function factory(...args) {
 

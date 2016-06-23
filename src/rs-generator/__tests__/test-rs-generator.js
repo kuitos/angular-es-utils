@@ -5,7 +5,10 @@
  */
 
 import {assert} from 'chai';
-import {defaultHttpConfigs} from '../index';
+import sinon from 'sinon';
+
+import injector from '../../injector';
+import genResource, {defaultHttpConfigs} from '../index';
 
 describe('resource generator', () => {
 
@@ -25,26 +28,16 @@ describe('resource generator', () => {
 
 	it('config reference changed will influence resource value', () => {
 
-		function genResource(additionalActions = {}, additionalHttpConfigs = {}) {
+		sinon.stub(injector, 'get', () => (...args) => args[2]);
 
-			additionalHttpConfigs = {...defaultHttpConfigs, ...additionalHttpConfigs};
-			// 将默认配置复制到新添加的action里
-			Object.keys(additionalActions).forEach(action => {
-				additionalActions[action] = Object.assign(additionalHttpConfigs, additionalActions[action]);
-			});
-			const DEFAULT_ACTIONS = {
-				// 查询，结果为对象
-				'get': {method: 'GET', ...additionalHttpConfigs}
-			};
-
-			return {...DEFAULT_ACTIONS, ...additionalActions};
-		}
-
-		const resource = genResource({create: {method: 'PUT'}}, {name: 'kuitos'});
+		const resource = genResource(null, null, null, {create: {method: 'PUT'}}, {name: 'kuitos'});
 		defaultHttpConfigs.headers.name = 'Kuitos_L';
 
 		assert.equal(resource.get.headers.name, 'Kuitos_L');
+		assert.equal(resource.get.method, 'GET');
+		assert.equal(resource.get.name, 'kuitos');
 		assert.equal(resource.create.headers.name, 'Kuitos_L');
+		assert.equal(resource.create.method, 'PUT');
 		assert.equal(resource.create.name, 'kuitos');
 
 	});
