@@ -1,24 +1,30 @@
 ## rs-generator
+基于$resource封装的resource生成器
 
 ### How To Use
 
 ```js
-import genResource, {setApiPrefix, setCommonConfigs} from 'angular-es-utils/rs-generator';
+import injector from 'angular-es-utils/injector';
+import genResource, {setApiPrefix, defaultHttpConfigs} from 'angular-es-utils/rs-generator';
 import dynamicExport from 'angular-es-utils/dynamic-export';
 
 // 设置rest api前缀
 setApiPrefix('/rest/1.0');
 
-const COMMON_CONFIGS = {
-	headers: {
-		'Content-Type': 'application/json'
-	},
-	interceptors: []
+// 设置请求通用配置
+defaultHttpConfigs.headers = { 'Content-Type': 'application/json'};
+
+// 由于$http api的限制，只能设置response/responseError拦截逻辑
+defaultHttpConfigs.interceptor = {
+	response: response => {},
+	responseError: rejection => {
+		if(rejection.status === 401){
+			injector.get('$location').url('/login');
+		}
+	}
 };
 
-// 设置请求通用配置
-setCommonConfigs(COMMON_CONFIGS);
-
+/* ----------------- 导出resource方案 ----------------- */
 // 方案1: 直接基于es6 export
 dynamicExport(exports, 'User', () => genResource('/users/:userId', false, {userId: 1}, 
 	{authenticate: {method: 'GET'}},
@@ -26,7 +32,7 @@ dynamicExport(exports, 'User', () => genResource('/users/:userId', false, {userI
 ));
 
 // 方案2: 使用angular service
-export default angular.module('services', [])
+export default angular.module('module.services', [])
 	.factory('User', () => genResource('/users/:userId', false, {userId: 1}))
 	.name;
 ```
@@ -42,13 +48,19 @@ export default angular.module('services', [])
 
 	API参数用法更$resource服务一致，具体参见 [$resource](https://docs.angularjs.org/api/ngResource/service/$resource)
 
-* setApiPrefix & setCommonConfigs
-	`import {setApiPrefix, setCommonConfigs} from 'angular-es-utils/rs-generator';`
+* setApiPrefix
+	`import {setApiPrefix} from 'angular-es-utils/rs-generator';`
 
 	// 设置使用genResource生成的请求前缀  
-setApiPrefix(apiPrefix)
+	setApiPrefix(apiPrefix)
 
-	// 设置使用genResource生成的请求通用配置，参考 [$http.config](https://docs.angularjs.org/api/ng/service/$http#usage)  
-setCommonConfigs(commonConfigs)
+* defaultHttpConfigs  
+	// 设置使用genResource生成的请求通用配置，参考 [$resource usage actions](https://docs.angularjs.org/api/ngResource/service/$resource)  
+	
+	```js
+	defaultHttpConfigs.headers = {xx:xxx};  
+	defaultHttpConfigs.interceptor = xxxxx;
+	```
+	
 
 

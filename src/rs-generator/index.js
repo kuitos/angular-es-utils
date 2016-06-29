@@ -5,6 +5,7 @@
  */
 
 import 'angular-resource';
+import angular from 'angular';
 
 import injector from '../injector';
 
@@ -16,16 +17,16 @@ export function setApiPrefix(prefix) {
 
 export let defaultHttpConfigs = {
 	headers: {},
-	interceptors: []
+	interceptor: {}
 };
 
 export default (url, cache, params, additionalActions = {}, additionalHttpConfigs = {}) => {
 
-	const requestConfigs = {...defaultHttpConfigs, ...additionalHttpConfigs};
+	const requestConfigs = angular.merge({}, defaultHttpConfigs, additionalHttpConfigs);
 
 	// 将默认配置复制到新添加的action里
 	Object.keys(additionalActions).forEach(action => {
-		additionalActions[action] = {...requestConfigs, ...additionalActions[action]};
+		additionalActions[action] = angular.merge({}, requestConfigs, additionalActions[action]);
 	});
 
 	// 默认cache为defaultRestCache
