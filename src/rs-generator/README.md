@@ -12,7 +12,10 @@ import dynamicExport from 'angular-es-utils/dynamic-export';
 setApiPrefix('/rest/1.0');
 
 // 设置请求通用配置
-defaultHttpConfigs.headers = { 'Content-Type': 'application/json'};
+defaultHttpConfigs.headers = { 
+	'Content-Type': 'application/json',
+	'X-ID': () => window.localStorage.getItem('X-ID')
+};
 
 // 由于$http api的限制，只能设置response/responseError拦截逻辑
 defaultHttpConfigs.interceptor = {
