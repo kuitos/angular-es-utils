@@ -54,7 +54,8 @@ describe('decorators', () => {
 			class InnerController {
 				constructor() {
 					assert.equal(this._$rootScope, $rootScope);
-					// assert.equal(this._user, user);
+					this.name = 'xxx';
+					this._user = Object.assign({age: 20}, this._user);
 				}
 
 				getUser() {
@@ -64,8 +65,9 @@ describe('decorators', () => {
 
 			const controller = $controller(InnerController, {$rootScope, user});
 			assert.equal(controller._$rootScope, $rootScope);
-			// assert.equal(controller.getUser(), user);
-			// assert.notEqual(InnerController.prototype._user, user);
+			assert.equal(controller.name, 'xxxx');
+			assert.deepEqual(controller.getUser(), Object.assign({age: 20}, user));
+			assert.notEqual(InnerController.prototype._user, user);
 		}));
 
 	});
@@ -112,13 +114,13 @@ describe('decorators', () => {
 			const descriptors = [
 				{
 					key: 'fn1',
-					value: function() {
+					value: function () {
 						return 1;
 					}
 				},
 				{
 					key: 'fn2',
-					value: function() {
+					value: function () {
 						return 2;
 					}
 				}

@@ -22,11 +22,11 @@ export default (...dependencies) => (target, name, descriptor) => {
 		constructor(...args) {
 
 			/* ----------------- 以下这一段恶心的代码都是为了兼容function跟class定义controller这两种情况 ------------------------ */
-			/* ----------------- 因为class定义的Constructor有时候需要直接访问this中以绑定的数据(fn.apply(instance, locals)) ------------------------ */
+			/* ----------------- 因为class定义的Constructor有时候需要直接访问this中已绑定的数据(fn.apply(instance, locals)) ---- */
 
-			// 存在通过 fn.apply(instance, locals) 的方式调用的情况,所以这里直接将依赖的服务拷贝到this里(服务已下划线作为前缀)
+			// 存在通过 fn.apply(instance, locals) 的方式调用的情况,所以这里直接将依赖的服务拷贝到this里(服务以下划线作为前缀)
 			dependencies.forEach((dependency, i) => this[`_${dependency}`] = args[i]);
-			// 将构造器初始化时就需要访问的数据挂载到prototype上,这样即使通过new方式实例化也能在constructor里的this也具备完整信息
+			// 将构造器初始化时就需要访问的数据挂载到prototype上,这样即使通过new方式实例化,constructor里的this也具备完整信息
 			Object.assign(OriginalConstructor.prototype, this);
 
 			const instance = new OriginalConstructor(...args);
@@ -37,10 +37,14 @@ export default (...dependencies) => (target, name, descriptor) => {
 				if (OriginalConstructor.prototype.propertyIsEnumerable(prop)) {
 					delete OriginalConstructor.prototype[prop];
 				}
-			});
 
-			// 将this上的信息绑定到实例上
-			Object.assign(instance, this);
+				// 属性可能会被重新定义,比如 this.name = this.name + 'xx';
+				// 所以这里不能直接Object.assign(instance, this)
+				// 只有this上存在但是instance上不存在的属性才复制过去
+				if (!instance.hasOwnProperty(prop)) {
+					instance[prop] = this[prop];
+				}
+			});
 
 			return instance;
 		}
