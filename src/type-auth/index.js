@@ -38,3 +38,12 @@ export function isFunction(value) {
 export function isPromiseLike(obj) {
 	return !!obj && typeof obj.then === 'function';
 }
+
+export function isElement(node) {
+	return !!(node &&
+	(node.nodeName || (node.prop && node.attr && node.find)));  // We have an on and find method part of jQuery API.
+}
+
+export function isDefined(value) {
+	return typeof value !== 'undefined';
+}
