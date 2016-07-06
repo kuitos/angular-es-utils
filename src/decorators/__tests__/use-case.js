@@ -7,7 +7,6 @@
 import Bind from '../Bind';
 import Inject from '../Inject';
 import Throttle from '../Throttle';
-// import Debounce from '../Debounce';
 
 @Inject('$q')
 export class Service {
@@ -38,12 +37,6 @@ export class Service {
 	@Throttle(100)
 	resize() {
 		this.age++;
-	}
-
-	// @Debounce(100)
-	switcher(cb) {
-		this.age++;
-		cb();
 	}
 
 }

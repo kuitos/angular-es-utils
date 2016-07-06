@@ -7,6 +7,9 @@
 import useCase, {Service} from './use-case';
 import Bind from '../Bind';
 import {assert} from 'chai';
+// import sinon from 'sinon';
+// import injector from '../../injector';
+// import Debounce from '../Debounce';
 import Inject from '../Inject';
 
 describe('decorators', () => {
@@ -158,10 +161,22 @@ describe('decorators', () => {
 	// describe('debounce', () => {
 	//
 	// 	it('service recipe: method only run once in 1000 milliseconds', done => {
-	// 		const now = Date.now();
-	// 		while (Date.now() - now < 1000) {
+	// 		sinon.stub(injector, 'get', () => setTimeout);
 	//
-	// 			serviceInstance.switcher(() => {
+	// 		class Service {
+	// 			@Debounce(100)
+	// 			switcher(cb) {
+	// 				this.age++;
+	// 				cb();
+	// 			}
+	// 		}
+	//
+	// 		const service = new Service();
+	//
+	// 		const now = Date.now();
+	// 		while (Date.now() - now < 101) {
+	//
+	// 			service.switcher(() => {
 	// 				assert.equal(serviceInstance.age, 1);
 	// 				done();
 	// 			});
