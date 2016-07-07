@@ -13,10 +13,12 @@ export default (delay = 0, invokeApply = false) => (target, name, descriptor) =>
 	}
 
 	const fn = descriptor.value || target[name];
-	const $timeout = injector.get('$timeout');
+	let $timeout = null;
 
 	descriptor.value = function(...args) {
 
+		// lazy init
+		$timeout = $timeout || injector.get('$timeout');
 		$timeout(() => {
 			fn.apply(this, args);
 		}, delay, invokeApply);

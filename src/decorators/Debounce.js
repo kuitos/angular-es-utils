@@ -12,10 +12,13 @@ export default (delay = 300, context, invokeApply) => (target, name, descriptor)
 	}
 
 	const fn = descriptor.value || target[name];
+	let $timeout = null;
 	let pendingDebounce = null;
-	const $timeout = injector.get('$timeout');
 
 	descriptor.value = function(...args) {
+
+		// lazy init
+		$timeout = $timeout || injector.get('$timeout');
 
 		$timeout.cancel(pendingDebounce);
 
