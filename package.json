@@ -1,6 +1,6 @@
 {
   "name": "angular-es-utils",
-  "version": "1.2.39",
+  "version": "1.2.40",
   "description": "es utils design for angular1.x",
   "main": "./index.js",
   "scripts": {

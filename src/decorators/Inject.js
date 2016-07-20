@@ -4,8 +4,10 @@
  * @since 2016-01-11
  */
 
+// safari里调用getOwnPropertyNames会拿到 arguments 跟 caller
+const stupidSafariProps = ['arguments', 'caller'];
 // 需要过滤的构造函数的属性
-const propBlacklist = ['name', 'prototype', 'length'];
+const propBlacklist = ['name', 'prototype', 'length'].concat(stupidSafariProps);
 /**
  * angular依赖注入器
  */
