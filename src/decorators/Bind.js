@@ -23,11 +23,11 @@ export default (target, name, descriptor) => {
 	delete descriptor.value;
 	delete descriptor.writable;
 
-	descriptor.set = function(value) {
+	descriptor.set = function (value) {
 		this[fnName] = value;
 	};
 
-	descriptor.get = function() {
+	descriptor.get = function () {
 		return this[fnName] || (this[fnName] = fn.bind(this));
 	};
 

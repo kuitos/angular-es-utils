@@ -117,13 +117,13 @@ describe('decorators', () => {
 			const descriptors = [
 				{
 					key: 'fn1',
-					value: function() {
+					value: function () {
 						return 1;
 					}
 				},
 				{
 					key: 'fn2',
-					value: function() {
+					value: function () {
 						return 2;
 					}
 				}

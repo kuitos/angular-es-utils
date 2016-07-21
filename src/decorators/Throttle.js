@@ -14,7 +14,7 @@ export default (delay = 10, context) => (target, name, descriptor) => {
 
 	let recent;
 
-	descriptor.value = function(...args) {
+	descriptor.value = function (...args) {
 
 		const now = Date.now();
 
