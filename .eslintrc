@@ -213,7 +213,7 @@
 	//代码块前面需要加空格
 	"space-before-blocks": [2, "always"],
 	//函数圆括号前面需要加空格
-	"space-before-function-paren": [2, "never"],
+	"space-before-function-paren": [2, {"anonymous": "always", "named": "never"}],
 	//关键词前面需要加空格
 	"space-before-keywords": [2, "always"],
 	//圆括号内部不需要加空格

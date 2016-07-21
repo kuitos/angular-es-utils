@@ -5,31 +5,41 @@
  */
 
 import {assert} from 'chai';
-import angular from 'angular';
 import EventBus from '../index';
-import {getInjector} from '../../injector';
 
 describe('event-bus', () => {
 
-	// init injector
-	const div = document.createElement('div');
-	div.innerHTML = '<div>0<div>00</div><div>01<div>010</div><div ng-app>011</div></div></div>';
-	document.body.appendChild(div);
-	angular.bootstrap(div);
-
-	const $scope = getInjector(div).get('$rootScope').$new(true);
-
 	EventBus.on('test', (...args) => {
 		assert.deepEqual(args, [10, 100, 1000]);
-	}, $scope);
+	});
 
-	it('publish correctly', () => {
+	EventBus.once('once', (...args) => {
+		assert.deepEqual(args, [10, 100, 1000]);
+	});
+
+	it('dispatch correctly', () => {
 		EventBus.dispatch('test', 10, 100, 1000);
 	});
 
-	it('subscribe will be removed automatically when scope destroyed', () => {
-		$scope.$destroy();
-		EventBus.dispatch('test', 1, 2, 3);
+	it('once on', () => {
+		EventBus.dispatch('once', 10, 100, 1000);
+		assert.equal(EventBus.getListeners('once'), 0);
+	});
+
+	it('off', () => {
+
+		EventBus.off('test');
+
+		const off = EventBus.on('test', (...args) => {
+			assert.equal(args[0], 1);
+		});
+
+		EventBus.dispatch('test', 1);
+
+		off();
+
+		assert.equal(EventBus.getListeners('test'), 0);
+
 	});
 
 });

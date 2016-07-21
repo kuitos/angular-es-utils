@@ -17,44 +17,54 @@ export default {
 	 * 订阅消息
 	 * @param topic 订阅消息名
 	 * @param listener 消息发布时触发的回调
-	 * @param scope 订阅行为发生所在的scope，用于在scope销毁时作解绑操作
 	 * @returns {Function} 取消订阅的反注册函数
 	 */
-	on: (topic, listener, scope) => {
+	on: function (topic, listener) {
 
 		let topicListeners = topics[topic] = topics[topic] || [];
-
-		// 可清除指定监听器，如果不传则清除对应topic全部监听器
-		function deregister(listener) {
-
-			var listenerIndex;
-
-			if (!listener) {
-				// 清空
-				topicListeners.length = 0;
-			} else {
-
-				listenerIndex = topicListeners.indexOf(listener);
-				if (~listenerIndex) {
-					topicListeners.splice(listenerIndex, 1);
-				}
-			}
-		}
-
-		if (scope && (scope.constructor === scope.$root.constructor)) {
-			// scope销毁时同步移除对应订阅行为
-			scope.$on('$destroy', deregister.bind(null, listener));
-		}
-
 		topicListeners.push(listener);
 
-		return deregister;
+		return this.off.bind(this, topic, listener);
+	},
+
+	once: function (topic, listener) {
+
+		const onceListener = (...args) => {
+			this.off(topic, onceListener);
+			listener.apply(null, args);
+		};
+
+		return this.on(topic, onceListener);
+	},
+
+	/**
+	 * 移除注册信息
+	 * @param topic 消息名
+	 * @param listener  移除的注册函数,不传则移除全部注册
+	 */
+	off: function (topic, listener) {
+
+		let topicListeners = topics[topic];
+
+		if (listener) {
+
+			const listenerIndex = topicListeners.indexOf(listener);
+			if (~listenerIndex) {
+				topicListeners.splice(listenerIndex, 1);
+			}
+
+		} else {
+			// 清空
+			topicListeners.length = 0;
+		}
+
+		return this;
 	},
 
 	/**
 	 * 发布消息，支持链式调用
 	 */
-	dispatch: (...args) => {
+	dispatch: function (...args) {
 
 		const topic = args[0];
 		const listeners = topics[topic] || [];
@@ -69,5 +79,9 @@ export default {
 		});
 
 		return this;
+	},
+
+	getListeners: function (topic) {
+		return topics[topic] || [];
 	}
 };
