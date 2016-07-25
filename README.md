@@ -24,6 +24,17 @@ import {Inject} from 'angular-es-utils';
 	import Animation from 'angular-es-utils/animation';
 	```
 
+* apply  
+	替代`$scope.$apply()`
+	
+	```js
+	import apply from 'angular-es-utils/apply';
+	
+	...
+	apply();
+	```
+
+
 * decorators  
 	装饰器
 	[decorators usage](https://github.com/kuitos/angular-es-utils/blob/master/src%2Fdecorators%2FREADME.md)
