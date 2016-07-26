@@ -1,7 +1,7 @@
 ## angular-es-utils
 
-[![npm](https://img.shields.io/npm/v/angular-es-utils.svg)](https://www.npmjs.com/package/angular-es-utils)
-[![npm](https://img.shields.io/npm/dt/angular-es-utils.svg)](https://www.npmjs.com/package/angular-es-utils)
+[![npm](https://img.shields.io/npm/v/angular-es-utils.svg?style=flat)](https://www.npmjs.com/package/angular-es-utils)
+[![npm](https://img.shields.io/npm/dt/angular-es-utils.svg?style=flat)](https://www.npmjs.com/package/angular-es-utils)
 [![coverage](https://img.shields.io/codecov/c/github/kuitos/angular-es-utils.svg?style=flat)](https://www.npmjs.com/package/angular-es-utils)
 
 The es6 version of [angular utils](https://github.com/kuitos/angular-utils)     
