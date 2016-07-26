@@ -1,8 +1,0 @@
-src
-build
-coverage
-.eslintrc
-.babelrc
-.npmignore
-karma.conf.js
-test.index.js
