@@ -3,7 +3,7 @@
 [![Build Status](https://img.shields.io/travis/kuitos/angular-es-utils.svg?style=flat)](https://travis-ci.org/kuitos/angular-es-utils)
 [![npm version](https://img.shields.io/npm/v/angular-es-utils.svg?style=flat)](https://www.npmjs.com/package/angular-es-utils)
 [![npm downloads](https://img.shields.io/npm/dt/angular-es-utils.svg?style=flat)](https://www.npmjs.com/package/angular-es-utils)
-[![coverage](https://img.shields.io/codecov/c/github/kuitos/angular-es-utils.svg?style=flat)](https://www.npmjs.com/package/angular-es-utils)
+[![coverage](https://img.shields.io/codecov/c/github/kuitos/angular-es-utils.svg?style=flat)](https://codecov.io/gh/kuitos/angular-es-utils)
 
 The es6 version of [angular utils](https://github.com/kuitos/angular-utils)     
 
