@@ -15,6 +15,11 @@ export function setApiPrefix(prefix) {
 	apiPrefix = prefix;
 }
 
+export let COMMON_HEADERS = {
+	'Cache-Control': 'no-cache',
+	'X-Requested-With': 'https://github.com/kuitos'
+};
+
 export let defaultHttpConfigs = {
 	headers: {},
 	interceptor: {}
@@ -22,7 +27,7 @@ export let defaultHttpConfigs = {
 
 export default (url, cache, params, additionalActions = {}, additionalHttpConfigs = {}) => {
 
-	const requestConfigs = angular.merge({}, defaultHttpConfigs, additionalHttpConfigs);
+	const requestConfigs = angular.merge({}, {headers: COMMON_HEADERS}, defaultHttpConfigs, additionalHttpConfigs);
 
 	// 将默认配置复制到新添加的action里
 	Object.keys(additionalActions).forEach(action => {
