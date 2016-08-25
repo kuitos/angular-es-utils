@@ -10,7 +10,7 @@ export default {
 
 	create(Constructor) {
 
-		console.warn('FactoryCreator.create 方法将在下一版本废弃,请尽快使用别的替代解决方案!');
+		console.warn('FactoryCreator.create 方法将在下一版本废弃,请尽快使用别的替代解决方案!(迁移指南:https://github.com/kuitos/angular-es-utils/blob/master/src/factory-creator/README.md)');
 
 		function factory(...args) {
 
