@@ -43,6 +43,9 @@ import {Inject} from 'angular-es-utils';
 
 * deferred
 * factory-creator
+	
+	##### Deprecated [迁移指南](src/factory-creator/README.md)
+
 	将Class转换成factory，供directive语法使用
 	
 	```js
