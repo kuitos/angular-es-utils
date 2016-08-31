@@ -75,22 +75,31 @@ export default class Direcitve {
 ### 迁移后写法
 
 ```js
-import Controller from './Controller';
 import injector from 'angular-es-utils/injector';
 
-export default class Direcitve {
-	
-	constructor() {
-		this.restrict = 'A';
-		this.controller = Controller;
-	}
-	
-	link() {
-		const $compile = injector.get('$compile');
-		$compile();
-		// ...
-	}
+export default function directiveLink() {
+	const $compile = injector.get('$compile');
+	$compile();
+	// ...
 }
+```
+
+index.js
+
+```js
+import controller from './Controller';
+import link from './directiveLink';
+
+const ddo = {
+	restrict: 'A',
+	controller,
+	link
+};
+
+export angular
+	.module('directive', [])
+	.directive('ccDirecrive', () => ddo)
+	.name;
 ```
 
 ## case 2 配合 `module.filter`/`module.factory` 使用的
