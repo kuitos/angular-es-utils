@@ -1,6 +1,6 @@
 # FactoryCreator 迁移指南
 
-目前 `FactoryCreator.create` API 已不推荐使用,预计在 **后面两个版本之后** 废弃,建议已在使用的项目及时迁移。方法参照以下几个example：
+目前 `FactoryCreator.create` API 已不推荐使用,预计在 **后面两个版本之后** 废弃,建议已在使用的项目及时迁移。(原则上已不建议使用 `module.directive` 定义指令，优先使用 `module.component` )方法参照以下几个example：
 
 ## case 1 配合 `module.directive` 使用的
 
