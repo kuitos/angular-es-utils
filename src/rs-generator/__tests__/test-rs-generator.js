@@ -43,6 +43,7 @@ describe('resource generator', () => {
 		assert.equal(resource.create.method, 'PUT');
 		assert.equal(resource.create.name, 'create');
 
+		sinon.restore();
 	});
 
 });
