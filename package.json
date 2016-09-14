@@ -10,7 +10,7 @@
     "test": "npm run codecheck & npm run cover",
     "unit": "karma start ./test/karma.unit.conf.js --single-run",
     "cover": "karma start ./test/karma.cover.conf.js",
-    "pub": "npm run build && npm publish lib && cnpm sync angular-es-utils",
+    "pub": "npm test && npm run build && npm publish lib && cnpm sync angular-es-utils",
     "start": "karma start ./test/karma.unit.conf.js"
   },
   "author": "Kuitos<kuitos.lau@gmail.com>",
