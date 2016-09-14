@@ -25,7 +25,7 @@ export let defaultHttpConfigs = {
 	interceptor: {}
 };
 
-export default (url, cache, params, additionalActions = {}, additionalHttpConfigs = {}) => {
+export default (url, cache, params, additionalActions = {}, additionalHttpConfigs = {}, options) => {
 
 	const requestConfigs = angular.merge({}, {headers: COMMON_HEADERS}, defaultHttpConfigs, additionalHttpConfigs);
 
@@ -53,5 +53,5 @@ export default (url, cache, params, additionalActions = {}, additionalHttpConfig
 		'delete': {method: 'DELETE', cache, ...requestConfigs}
 	};
 
-	return injector.get('$resource')(apiPrefix + url, params, {...DEFAULT_ACTIONS, ...additionalActions});
+	return injector.get('$resource')(apiPrefix + url, params, {...DEFAULT_ACTIONS, ...additionalActions}, options);
 };
