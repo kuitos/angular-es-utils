@@ -4,7 +4,7 @@
  * @since 2016-05-04
  */
 
-import {assert} from 'chai';
+import { assert } from 'chai';
 import EventBus from '../index';
 
 describe('event-bus', () => {
