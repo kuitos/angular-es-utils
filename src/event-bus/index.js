@@ -67,7 +67,7 @@ export default {
 	dispatch: function (...args) {
 
 		const topic = args[0];
-		const listeners = [...(topics[topic] || [])];
+		const listeners = [].concat(topics[topic] || []);
 
 		listeners.forEach(listener => {
 
