@@ -64,4 +64,26 @@ describe('event-bus', () => {
 		assert.equal(test, 1);
 	});
 
+	it('off listener in another listener', () => {
+
+		EventBus.off('test');
+
+		let test = 0;
+		let off = null;
+
+		EventBus.on('test', () => {
+			off();
+		});
+
+		off = EventBus.on('test', () => {
+			test = 1;
+		});
+
+		EventBus.dispatch('test');
+
+		off();
+
+		assert.equal(test, 0);
+	});
+
 });

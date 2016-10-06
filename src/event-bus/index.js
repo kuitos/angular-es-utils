@@ -50,7 +50,7 @@ export default {
 
 			const listenerIndex = topicListeners.indexOf(listener);
 			if (~listenerIndex) {
-				topicListeners.splice(listenerIndex, 1);
+				topicListeners[listenerIndex] = null;
 			}
 
 		} else {
@@ -67,16 +67,21 @@ export default {
 	dispatch: function (...args) {
 
 		const topic = args[0];
-		const listeners = [].concat(topics[topic] || []);
+		const listeners = topics[topic] || [];
+		let i = 0;
 
-		listeners.forEach(listener => {
-
-			if (angular.isFunction(listener)) {
-				listener.apply(null, args.slice(1));
+		while (i < listeners.length) {
+			if (listeners[i] === null) {
+				listeners.splice(i, 1);
 			} else {
-				console.error('事件总线分发 %s 消息失败，注册的listener不是函数类型！', topic);
+				if (angular.isFunction(listeners[i])) {
+					listeners[i].apply(null, args.slice(1));
+				} else {
+					console.error('事件总线分发 %s 消息失败，注册的listener不是函数类型！', topic);
+				}
+				i++;
 			}
-		});
+		}
 
 		return this;
 	},
