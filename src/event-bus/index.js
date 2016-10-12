@@ -4,7 +4,7 @@
  * @since 2016-05-04
  */
 
-import angular from 'angular';
+import { isFunction } from '../type-auth';
 
 let topics = {};
 
@@ -68,18 +68,18 @@ export default {
 
 		const topic = args[0];
 		const listeners = topics[topic] || [];
-		let i = 0;
 
-		while (i < listeners.length) {
+		for (let i = 0; i < listeners.length; i++) {
+
 			if (listeners[i] === null) {
 				listeners.splice(i, 1);
 			} else {
-				if (angular.isFunction(listeners[i])) {
+
+				if (isFunction(listeners[i])) {
 					listeners[i].apply(null, args.slice(1));
 				} else {
 					console.error('事件总线分发 %s 消息失败，注册的listener不是函数类型！', topic);
 				}
-				i++;
 			}
 		}
 
