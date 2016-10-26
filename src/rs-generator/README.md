@@ -28,13 +28,19 @@ defaultHttpConfigs.interceptor = {
 };
 
 /* ----------------- 导出resource方案 ----------------- */
-// 方案1: 直接基于es6 export
+// 方案1: 直接es6 export, 只有嵌入portal的子系统可以直接export
+export const User = genResource('/users/:userId', false, {userId: 1}, 
+	{authenticate: {method: 'GET'}},
+	{headers: {'X-AUTH-NAME': 'xxxx'}}
+);
+
+// 方案2: lazy export
 dynamicExport(exports, 'User', () => genResource('/users/:userId', false, {userId: 1}, 
 	{authenticate: {method: 'GET'}},
 	{headers: {'X-AUTH-NAME': 'xxxx'}}
 ));
 
-// 方案2: 使用angular service
+// 方案3: 使用angular service
 export default angular.module('module.services', [])
 	.factory('User', () => genResource('/users/:userId', false, {userId: 1}))
 	.name;
