@@ -4,3 +4,4 @@ build
 coverage
 lib
 .idea/
+npm-debug.log
