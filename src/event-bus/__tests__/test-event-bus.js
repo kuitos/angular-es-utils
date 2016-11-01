@@ -86,4 +86,23 @@ describe('event-bus', () => {
 		assert.equal(test, 0);
 	});
 
+	it('one listener throws exception, other listeners work well', () => {
+
+		EventBus.off('test');
+
+		let test = 0;
+
+		EventBus.on('test', () => {
+			throw new Error();
+		});
+
+		EventBus.on('test', () => {
+			test = 1;
+		});
+
+		EventBus.dispatch('test');
+
+		assert.equal(test, 1);
+	});
+
 });
