@@ -39,7 +39,11 @@ import {Inject} from 'angular-es-utils';
 
 * decorators  
 	装饰器
-	[decorators usage](https://github.com/kuitos/angular-es-utils/blob/master/src%2Fdecorators%2FREADME.md)
+	[decorators usage](src/decorators/README.md)
+	
+* rs-generator
+    resource 生成器
+    [rs-generator usage](src/rs-generator/README.md)
 
 * deferred
 * factory-creator
