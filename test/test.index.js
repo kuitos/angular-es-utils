@@ -7,10 +7,6 @@
 import 'angular';
 import 'angular-mocks';
 
-// init injector
-document.body.setAttribute('ng-app', '');
-angular.bootstrap(document.body);
-
 const context = require.context('../src', true, /\/__tests__\/test-.*\.js$/);
 context.keys().forEach(context);
 

@@ -4,46 +4,97 @@
  * @since 2016-06-21
  */
 
-import {assert} from 'chai';
+import angualr from 'angular';
+import ngResource from 'angular-resource';
+
+import { assert } from 'chai';
 import sinon from 'sinon';
 
 import injector from '../../injector';
-import genResource, {defaultHttpConfigs} from '../index';
+import genResource, { defaultHttpConfigs } from '../index';
+
+defaultHttpConfigs.headers.name = 'Kuitos_L';
+const resource = genResource('/users', false, {userId: 'kuitos'}, {
+	create: {
+		method: 'PUT',
+		name: 'create',
+		headers: {name: 'lk', age: 20}
+	}
+}, {
+	name: 'kuitos',
+	headers: {id: 100}
+});
 
 describe('resource generator', () => {
 
+	let sandbox = null;
+
+	beforeEach(() => {
+		angular.module('mock', [ngResource]).run($injector => angular.element(document.body).data('$injector', $injector));
+		sandbox = sinon.sandbox.create();
+	});
+
+	afterEach(() => {
+		sandbox.restore();
+	});
+
 	it('config reference changed will influence resource value', () => {
 
-		sinon.stub(injector, 'get', () => (...args) => args[2]);
+		const response = {
+			success: true,
+			msg: 'wtf'
+		};
 
-		defaultHttpConfigs.headers.name = 'Kuitos_L';
+		let $httpBackend = null;
 
-		const resource = genResource(null, null, null, {
-			create: {
-				method: 'PUT',
-				name: 'create',
-				headers: {name: 'lk', age: 20}
+		angular.module('mock').config($httpProvider => $httpProvider.interceptors.push(() => ({
+
+			response(response) {
+
+				const config = response.config;
+				if (config.method === 'GET') {
+					assert.equal(config.headers.name, 'Kuitos_L');
+					assert.equal(config.headers.age, undefined);
+					assert.equal(config.headers['Cache-Control'], 'no-cache');
+					assert.equal(config.name, 'kuitos');
+					assert.equal(config.headers.id, 100);
+
+				}
+
+				if (config.method === 'PUT') {
+					assert.equal(config.headers.name, 'lk');
+					assert.equal(config.headers['Cache-Control'], 'no-cache');
+					assert.equal(config.headers.age, 20);
+					assert.equal(config.headers.id, 100);
+					assert.equal(config.method, 'PUT');
+					assert.equal(config.name, 'create');
+				}
+
+				return response;
 			}
-		}, {
-			name: 'kuitos',
-			headers: {id: 100}
+
+		})));
+
+		angular.mock.module('mock');
+
+		angualr.mock.inject((_$httpBackend_, $resource) => {
+
+			$httpBackend = _$httpBackend_;
+
+			sandbox.stub(injector, 'get', service => service === '$resource' ? $resource : {});
+
+			$httpBackend.whenGET('/users?userId=kuitos').respond(200, response);
+			$httpBackend.whenPUT('/users?userId=kuitos').respond(200, response);
+
 		});
 
-		assert.equal(resource.get.headers.name, 'Kuitos_L');
-		assert.equal(resource.get.headers.age, undefined);
-		assert.equal(resource.get.headers['Cache-Control'], 'no-cache');
-		assert.equal(resource.get.name, 'kuitos');
-		assert.equal(resource.get.headers.id, 100);
-		assert.equal(resource.get.method, 'GET');
+		resource.get().$promise.then(res => {
+			assert.equal(response.success, res.success);
+			assert.equal(response.msg, res.msg);
+		});
 
-		assert.equal(resource.create.headers.name, 'lk');
-		assert.equal(resource.create.headers['Cache-Control'], 'no-cache');
-		assert.equal(resource.create.headers.age, 20);
-		assert.equal(resource.create.headers.id, 100);
-		assert.equal(resource.create.method, 'PUT');
-		assert.equal(resource.create.name, 'create');
+		$httpBackend.flush();
 
-		sinon.restore();
 	});
 
 });
