@@ -34,12 +34,16 @@ export const User = genResource('/users/:userId', false, {userId: 1},
 	{headers: {'X-AUTH-NAME': 'xxxx'}}
 );
 
+// DEPRECATED!!
+// 2.x版本已废弃,genResource 自身已具备 lazy export 能力，所以直接使用方案 1 即可
 // 方案2: lazy export
 dynamicExport(exports, 'User', () => genResource('/users/:userId', false, {userId: 1}, 
 	{authenticate: {method: 'GET'}},
 	{headers: {'X-AUTH-NAME': 'xxxx'}}
 ));
 
+// DEPRECATED!!
+// 还不如方案2
 // 方案3: 使用angular service
 export default angular.module('module.services', [])
 	.factory('User', () => genResource('/users/:userId', false, {userId: 1}))

@@ -11,7 +11,6 @@ import Animation from './animation';
 import {getInjector} from './injector';
 import genResource from './rs-generator';
 import EventBus from './event-bus';
-import dynamicExport from './dynamic-export';
 
 export * from './decorators';
 
@@ -21,7 +20,6 @@ export {
 	Deferred,
 	Animation,
 	getInjector,
-	dynamicExport,
 	genResource,
 	EventBus
 };

@@ -6,6 +6,7 @@
 
 import 'angular-resource';
 import angular from 'angular';
+import lazyInitialize from 'esnext-utils/proxy/lazy-initialize';
 
 import injector from '../injector';
 
@@ -53,5 +54,5 @@ export default (url, cache, params, additionalActions = {}, additionalHttpConfig
 		'delete': {method: 'DELETE', cache, ...requestConfigs}
 	};
 
-	return injector.get('$resource')(apiPrefix + url, params, {...DEFAULT_ACTIONS, ...additionalActions}, options);
+	return lazyInitialize({}, () => injector.get('$resource')(apiPrefix + url, params, {...DEFAULT_ACTIONS, ...additionalActions}, options));
 };
