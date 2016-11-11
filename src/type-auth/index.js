@@ -5,6 +5,8 @@
  */
 
 const msie = window.document.documentMode;
+const toString = Object.prototype.toString;
+
 export function isClass(func) {
 	// IE 9-11 do not support classes and IE9 leaks with the code below.
 	if (msie <= 11) {
@@ -20,11 +22,15 @@ export function isNumber() {
 }
 
 export function isRegExp(value) {
-	return Object.prototype.toString.call(value) === '[object RegExp]';
+	return toString.call(value) === '[object RegExp]';
 }
 
 export function isObject(value) {
-	return value !== null && typeof value === 'object';
+	return toString.call(value) === '[object Object]';
+}
+
+export function isArray(value) {
+	return toString.call(value) === '[object Array]';
 }
 
 export function isString(value) {
