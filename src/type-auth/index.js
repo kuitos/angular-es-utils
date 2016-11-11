@@ -26,12 +26,10 @@ export function isRegExp(value) {
 }
 
 export function isObject(value) {
-	return toString.call(value) === '[object Object]';
+	return value !== null && typeof value === 'object';
 }
 
-export function isArray(value) {
-	return toString.call(value) === '[object Array]';
-}
+export const isArray = Array.isArray;
 
 export function isString(value) {
 	return typeof value === 'string';
