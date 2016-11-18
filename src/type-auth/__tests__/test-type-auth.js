@@ -7,6 +7,8 @@ describe('type-auth', () => {
 	it('isObject', () => {
 		assert.isTrue(isObject({}));
 		assert.isTrue(isObject([]));
+		assert.isTrue(isObject(/s+/g));
+		assert.isTrue(isObject(function () {}));
 	});
 
 	it('isArray', () => {
