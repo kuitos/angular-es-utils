@@ -76,7 +76,11 @@ export default {
 			} else {
 
 				if (isFunction(listeners[i])) {
-					listeners[i].apply(null, args.slice(1));
+					try {
+						listeners[i].apply(null, args.slice(1));
+					} catch (err) {
+						console.error(err);
+					}
 				} else {
 					console.error('事件总线分发 %s 消息失败，注册的listener不是函数类型！', topic);
 				}
