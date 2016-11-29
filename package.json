@@ -1,6 +1,6 @@
 {
   "name": "angular-es-utils",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "es utils design for angular1.x",
   "main": "./index.js",
   "scripts": {
@@ -47,6 +47,6 @@
   "dependencies": {
     "angular": "^1.5.3",
     "angular-resource": "^1.5.5",
-    "esnext-utils": "^1.0.0"
+    "esnext-utils": "^1.1.0"
   }
 }
