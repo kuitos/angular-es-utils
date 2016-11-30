@@ -66,15 +66,24 @@ export default {
 	dispatch: function (topic, ...args) {
 
 		const listeners = topics[topic] || [];
+		const listenersToBeRemoved = [];
 
-		for (let i = 0; i < listeners.length; i++) {
+		listeners.forEach(listener => {
 
-			if (isFunction(listeners[i])) {
-				listeners[i].apply(null, args);
+			if (listener === null) {
+				listenersToBeRemoved.push(listener);
 			} else {
-				console.error('事件总线分发 %s 消息失败，注册的listener不是函数类型！', topic);
+				if (isFunction(listener)) {
+					listener.apply(null, args);
+				} else {
+					console.error('事件总线分发 %s 消息失败，注册的listener不是函数类型！', topic);
+				}
 			}
-		}
+
+		});
+
+		// 清空空值的 listener
+		listenersToBeRemoved.forEach(emptyListener => listeners.splice(listeners.indexOf(emptyListener), 1));
 
 		return this;
 	},

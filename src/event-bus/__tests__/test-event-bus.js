@@ -98,6 +98,8 @@ describe('event-bus', () => {
 		EventBus.dispatch('off1', msg1);
 		assert.isTrue(called);
 
+		assert.equal(EventBus.getListeners('off1').length, 1);
+
 	});
 
 });
