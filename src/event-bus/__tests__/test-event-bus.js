@@ -3,7 +3,6 @@
  * @homepage https://github.com/kuitos/
  * @since 2016-05-04
  */
-
 import { assert } from 'chai';
 import EventBus from '../index';
 
@@ -84,6 +83,21 @@ describe('event-bus', () => {
 		off();
 
 		assert.equal(test, 0);
+	});
+
+	it('listener queue should execute well after off action', () => {
+
+		let called = false;
+		const msg1 = 'k';
+		const off1 = EventBus.on('off1', msg => assert.equal(msg, msg1));
+		EventBus.on('off1', msg => {
+			called = true;
+			assert.equal(msg, msg1);
+		});
+		off1();
+		EventBus.dispatch('off1', msg1);
+		assert.isTrue(called);
+
 	});
 
 });
