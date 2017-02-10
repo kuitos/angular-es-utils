@@ -3,7 +3,6 @@
  * @homepage https://github.com/kuitos/
  * @since 2016-05-04
  */
-
 import { isFunction } from '../type-auth';
 
 let topics = {};
@@ -64,19 +63,20 @@ export default {
 	/**
 	 * 发布消息，支持链式调用
 	 */
-	dispatch: function (...args) {
+	dispatch: function (topic, ...args) {
 
-		const topic = args[0];
 		const listeners = topics[topic] || [];
 
-		for (let i = 0; i < listeners.length; i++) {
+		let i = listeners.reverse().length;
+		while (i--) {
 
-			if (listeners[i] === null) {
+			const listener = listeners[i];
+
+			if (listener === null) {
 				listeners.splice(i, 1);
 			} else {
-
-				if (isFunction(listeners[i])) {
-					listeners[i].apply(null, args.slice(1));
+				if (isFunction(listener)) {
+					listener.apply(null, args);
 				} else {
 					console.error('事件总线分发 %s 消息失败，注册的listener不是函数类型！', topic);
 				}
