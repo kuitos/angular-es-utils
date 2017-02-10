@@ -25,13 +25,13 @@ export function isRegExp(value) {
 	return toString.call(value) === '[object RegExp]';
 }
 
+// the specification
+// @see https://github.com/kuitos/angular-es-utils/pull/5
 export function isObject(value) {
-	return toString.call(value) === '[object Object]';
+	return value != null && (typeof value === 'object' || typeof value === 'function');
 }
 
-export function isArray(value) {
-	return toString.call(value) === '[object Array]';
-}
+export const isArray = Array.isArray;
 
 export function isString(value) {
 	return typeof value === 'string';
