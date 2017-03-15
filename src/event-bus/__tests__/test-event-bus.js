@@ -25,6 +25,25 @@ describe('event-bus', () => {
 		assert.equal(EventBus.getListeners('once'), 0);
 	});
 
+	it('add two listener, ensure execution order is correct', () => {
+
+		EventBus.off('test');
+
+		let test = [];
+
+		EventBus.on('test', () => {
+			test.push(1);
+		});
+
+		EventBus.on('test', () => {
+			test.push(2);
+		});
+
+		EventBus.dispatch('test');
+
+		assert.deepEqual(test, [1, 2]);
+	});
+
 	it('off', () => {
 
 		EventBus.off('test');
@@ -84,6 +103,77 @@ describe('event-bus', () => {
 
 		assert.equal(test, 0);
 	});
+
+	it('add listener in another listener', () => {
+
+		EventBus.off('test');
+
+		let test = 0;
+
+		EventBus.on('test', () => {
+			EventBus.on('test', () => {
+				test = 1;
+			});
+		});
+
+		EventBus.dispatch('test');
+
+		assert.equal(test, 1);
+	});
+
+	it('use once method to add listener', () => {
+
+		EventBus.off('test');
+
+		let test = 0;
+		let once = 0;
+		let anotherTest = 0;
+
+		EventBus.on('test', () => {
+			test = 1;
+		});
+
+		EventBus.once('test', () => {
+			once = 1;
+		});
+
+		EventBus.on('test', () => {
+			anotherTest = 1;
+		});
+
+		EventBus.dispatch('test');
+
+		assert.equal(test, 1);
+		assert.equal(once, 1);
+		assert.equal(anotherTest, 1);
+	});
+
+	it('use once method add listener in another listener', () => {
+
+		EventBus.off('test');
+
+		let test = 0;
+		let once = 0;
+		let anotherTest = 0;
+
+		EventBus.on('test', () => {
+			test = 1;
+			EventBus.once('test', () => {
+				once = 1;
+			});
+		});
+
+		EventBus.on('test', () => {
+			anotherTest = 1;
+		});
+
+		EventBus.dispatch('test');
+
+		assert.equal(test, 1);
+		assert.equal(once, 1);
+		assert.equal(anotherTest, 1);
+	});
+
 
 	it('listener queue should execute well after off action', () => {
 

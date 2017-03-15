@@ -65,10 +65,10 @@ export default {
 	 */
 	dispatch: function (topic, ...args) {
 
+		let i = 0;
 		const listeners = topics[topic] || [];
 
-		let i = listeners.reverse().length;
-		while (i--) {
+		while (i < listeners.length) {
 
 			const listener = listeners[i];
 
@@ -80,6 +80,7 @@ export default {
 				} else {
 					console.error('事件总线分发 %s 消息失败，注册的listener不是函数类型！', topic);
 				}
+				i++;
 			}
 		}
 
