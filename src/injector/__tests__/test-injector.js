@@ -14,7 +14,8 @@ describe('injector', () => {
 		const div = document.createElement('div');
 		div.innerHTML = '<div>0<div>00</div><div>01<div>010</div><div ng-app>011</div></div></div>';
 		angular.bootstrap(div);
-		assert.isTrue(angular.equals(getInjector(div), $injector));
+		const injector = getInjector(div);
+		assert.isTrue(angular.equals(injector.modules.ng, $injector.modules.ng));
 	}));
 
 });
