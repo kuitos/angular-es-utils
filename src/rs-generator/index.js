@@ -4,7 +4,6 @@
  * @since 2016-05-11
  */
 
-import 'angular-resource';
 import angular from 'angular';
 import lazyInitialize from 'esnext-utils/proxy/lazy-initialize';
 
